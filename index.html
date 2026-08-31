@@ -297,65 +297,65 @@
             </div>
 
             <!-- Bottom Banner -->
-            <div class="relative overflow-hidden rounded-[24px] bg-[#18181b] text-white p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-10">
-              <!-- Decorative Background -->
-              <div class="absolute inset-0 pointer-events-none opacity-40">
-                <svg class="absolute w-[800px] h-[800px] right-[-200px] top-[-300px] text-white/5" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-                  <circle cx="50" cy="50" r="40" stroke-width="0.5" />
-                  <circle cx="50" cy="50" r="30" stroke-width="0.5" />
-                  <circle cx="50" cy="50" r="20" stroke-width="0.5" />
+            <div class="relative overflow-hidden rounded-[24px] bg-[#18181b] text-white p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-10 lg:gap-20">
+              <!-- Decorative Background Circles -->
+              <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-10">
+                <svg class="absolute w-[800px] h-[800px] transform translate-x-[15%] md:translate-x-[25%]" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="400" cy="400" r="160" stroke="white" stroke-width="1.5" />
+                  <circle cx="400" cy="400" r="260" stroke="white" stroke-width="1.5" />
+                  <circle cx="400" cy="400" r="360" stroke="white" stroke-width="1.5" />
+                  <circle cx="400" cy="400" r="460" stroke="white" stroke-width="1.5" />
                 </svg>
-                <div class="absolute top-10 right-40 w-1.5 h-1.5 rounded-full bg-[#FF3D00]"></div>
-                <div class="absolute top-20 right-10 w-2 h-2 rounded-full bg-white/40"></div>
               </div>
 
               <!-- Banner Text & Button -->
-              <div class="relative z-10 w-full max-w-md">
-                <h2 class="text-3xl sm:text-[34px] font-extrabold tracking-tight leading-tight mb-6">
-                  Deposit $100, get $100. First loss protected.
+              <div class="relative z-10 w-full max-w-md shrink-0">
+                <h2 class="text-[32px] sm:text-[40px] font-extrabold tracking-tight leading-[1.1] mb-8">
+                  Deposit $100, get $100.<br/>
+                  First loss protected.
                 </h2>
-                <a href="#user-incentives" class="inline-flex items-center px-6 py-2.5 bg-white text-black rounded-full text-sm font-bold hover:bg-zinc-100 transition-colors cursor-pointer">
+                <a href="#user-incentives" class="inline-flex items-center px-6 py-2.5 bg-white text-[#18181b] rounded-full text-[15px] font-bold hover:bg-zinc-100 transition-colors cursor-pointer shadow-sm">
                   Learn more
                 </a>
               </div>
 
               <!-- Floating Card -->
-              <div class="relative z-10 bg-white text-black rounded-[20px] p-5 w-full max-w-[280px] shadow-2xl flex-shrink-0">
-                <div class="space-y-4">
-                  <div class="flex items-start gap-3">
-                    <span class="mt-0.5 w-6 h-6 rounded-md bg-[#DCFCE7] text-[#166534] flex items-center justify-center flex-shrink-0">
-                      <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
-                    </span>
+              <div class="relative z-10 bg-white text-[#18181b] rounded-[24px] p-6 sm:p-7 w-full max-w-[340px] md:max-w-[360px] shadow-2xl flex-shrink-0">
+                <div class="space-y-6">
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-[#DCFCE7] text-[#166534] flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    </div>
                     <div>
-                      <p class="text-[14px] font-bold leading-none mb-1">BACK a call</p>
-                      <p class="text-[12px] text-zinc-500">Stake that they are right</p>
+                      <p class="text-[15px] font-bold leading-none mb-1.5">BACK a call</p>
+                      <p class="text-[13px] text-zinc-500 leading-none">Stake that they are right</p>
                     </div>
                   </div>
-                  <div class="flex items-start gap-3">
-                    <span class="mt-0.5 w-6 h-6 rounded-md bg-[#FEE2E2] text-[#991B1B] flex items-center justify-center flex-shrink-0">
-                      <i data-lucide="trending-down" class="w-3.5 h-3.5"></i>
-                    </span>
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-[#FEE2E2] text-[#991B1B] flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="trending-down" class="w-5 h-5"></i>
+                    </div>
                     <div>
-                      <p class="text-[14px] font-bold leading-none mb-1">FADE a call</p>
-                      <p class="text-[12px] text-zinc-500">Stake that they are wrong</p>
+                      <p class="text-[15px] font-bold leading-none mb-1.5">FADE a call</p>
+                      <p class="text-[13px] text-zinc-500 leading-none">Stake that they are wrong</p>
                     </div>
                   </div>
-                  <div class="flex items-start gap-3">
-                    <span class="mt-0.5 w-6 h-6 rounded-md bg-zinc-100 text-[#18181b] flex items-center justify-center flex-shrink-0">
-                      <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
-                    </span>
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-100 text-zinc-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="gauge" class="w-5 h-5"></i>
+                    </div>
                     <div>
-                      <p class="text-[14px] font-bold leading-none mb-1">Conviction Score</p>
-                      <p class="text-[12px] text-zinc-500">Public CT reputation</p>
+                      <p class="text-[15px] font-bold leading-none mb-1.5">Conviction Score</p>
+                      <p class="text-[13px] text-zinc-500 leading-none">Public CT reputation</p>
                     </div>
                   </div>
-                  <div class="flex items-start gap-3">
-                    <span class="mt-0.5 w-6 h-6 rounded-md bg-zinc-100 text-[#18181b] flex items-center justify-center flex-shrink-0">
-                      <i data-lucide="layers" class="w-3.5 h-3.5"></i>
-                    </span>
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-zinc-100 text-zinc-600 flex items-center justify-center flex-shrink-0">
+                      <i data-lucide="layers" class="w-5 h-5"></i>
+                    </div>
                     <div>
-                      <p class="text-[14px] font-bold leading-none mb-1">Level System</p>
-                      <p class="text-[12px] text-zinc-500">Climb with accurate calls</p>
+                      <p class="text-[15px] font-bold leading-none mb-1.5">Level System</p>
+                      <p class="text-[13px] text-zinc-500 leading-none">Climb with accurate calls</p>
                     </div>
                   </div>
                 </div>
