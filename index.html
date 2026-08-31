@@ -63,7 +63,7 @@
           </a>
         </div>
         <nav class="hidden lg:flex items-center gap-7">
-          <a href="#" data-home class="text-[15px] font-bold text-[#18181b]">Docs</a>
+          <a href="#" data-home class="text-[15px] font-bold bg-[#18181b] text-white px-4 py-1.5 rounded-full shadow-sm hover:bg-black transition-colors">Docs</a>
           <a href="https://conviction.durex2456.workers.dev/" target="_blank" rel="noopener noreferrer" class="text-[15px] font-medium text-zinc-500 hover:text-[#18181b] transition-colors">Markets</a>
           <a href="https://conviction.durex2456.workers.dev/" target="_blank" rel="noopener noreferrer" class="text-[15px] font-medium text-zinc-500 hover:text-[#18181b] transition-colors">Leaderboard</a>
           <a href="https://conviction.durex2456.workers.dev/" target="_blank" rel="noopener noreferrer" class="text-[15px] font-medium text-zinc-500 hover:text-[#18181b] transition-colors">Curators</a>
@@ -121,10 +121,10 @@
           <p class="text-sm font-mono text-zinc-500 max-w-2xl leading-relaxed mb-6">
             The definitive guide to Convictionmarkets. Explore our core mechanics, tokenomics, incentive structures, and technical architecture to understand the future of prediction markets.
           </p>
-          <div class="flex flex-wrap gap-3 font-mono text-xs font-bold uppercase tracking-wider text-black">
-            <span class="px-3 py-1.5 bg-zinc-200/50 rounded-md border border-zinc-200">Back it.</span>
-            <span class="px-3 py-1.5 bg-zinc-200/50 rounded-md border border-zinc-200">Fade it.</span>
-            <span class="px-3 py-1.5 bg-black text-white rounded-md">Prove it.</span>
+          <div id="animated-badges" class="flex flex-wrap gap-3 font-mono text-xs font-bold uppercase tracking-wider">
+            <span class="badge-item px-3 py-1.5 rounded-md border transition-colors duration-300 bg-black text-white border-transparent">BACK IT.</span>
+            <span class="badge-item px-3 py-1.5 rounded-md border transition-colors duration-300 bg-zinc-200/50 text-black border-zinc-200">FADE IT.</span>
+            <span class="badge-item px-3 py-1.5 rounded-md border transition-colors duration-300 bg-zinc-200/50 text-black border-zinc-200">PROVE IT.</span>
           </div>
         </div>
         <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -271,17 +271,17 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
               <a href="#how-it-works" class="flex flex-col p-5 bg-[#FAFAFA] border border-zinc-200 rounded-2xl hover:bg-zinc-100 transition-colors cursor-pointer">
                 <i data-lucide="zap" class="w-5 h-5 text-black mb-4"></i>
-                <h3 class="text-[15px] font-bold text-black mb-2">Conviction 101</h3>
+                <h3 class="text-[15px] font-bold text-black mb-2">How It Works (3 Steps)</h3>
                 <p class="text-[12px] font-mono text-[#71717A] leading-relaxed">How a tweet becomes a market in three steps.</p>
               </a>
-              <a href="#core-mechanics" class="flex flex-col p-5 bg-white border border-black rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 transition-transform cursor-pointer">
+              <a href="#core-mechanics" class="flex flex-col p-5 bg-[#FAFAFA] border border-zinc-200 rounded-2xl hover:bg-zinc-100 transition-colors cursor-pointer">
                 <i data-lucide="book-open" class="w-5 h-5 text-black mb-4"></i>
                 <h3 class="text-[15px] font-bold text-black mb-2">Core Mechanics</h3>
                 <p class="text-[12px] font-mono text-[#71717A] leading-relaxed">BACK, FADE, resolution, and how payouts work.</p>
               </a>
-              <a href="#conviction-score" class="flex flex-col p-5 bg-[#FAFAFA] border border-zinc-200 rounded-2xl hover:bg-zinc-100 transition-colors cursor-pointer">
+              <a href="#reputation" class="flex flex-col p-5 bg-[#FAFAFA] border border-zinc-200 rounded-2xl hover:bg-zinc-100 transition-colors cursor-pointer">
                 <i data-lucide="gauge" class="w-5 h-5 text-black mb-4"></i>
-                <h3 class="text-[15px] font-bold text-black mb-2">Conviction Score</h3>
+                <h3 class="text-[15px] font-bold text-black mb-2">Conviction Score & Levels</h3>
                 <p class="text-[12px] font-mono text-[#71717A] leading-relaxed">Your public reputation, visible to all of CT.</p>
               </a>
             </div>
@@ -353,7 +353,6 @@
             </div>
           </article>
 
-          <!-- How It Works -->
           <article id="page-how-it-works" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Product</span>
@@ -396,7 +395,6 @@
             </div>
           </article>
 
-          <!-- Core Mechanics -->
           <article id="page-core-mechanics" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Product</span>
@@ -438,7 +436,6 @@
             </div>
           </article>
 
-          <!-- Markets & Categories -->
           <article id="page-markets" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Product</span>
@@ -512,7 +509,6 @@
             </div>
           </article>
 
-          <!-- Conviction Score & Levels -->
           <article id="page-reputation" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Product</span>
@@ -559,7 +555,6 @@
             </div>
           </article>
 
-          <!-- User Incentives -->
           <article id="page-user-incentives" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Incentives & Rewards</span>
@@ -621,7 +616,6 @@
             </div>
           </article>
 
-          <!-- Roadmap -->
           <article id="page-roadmap" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Strategy</span>
@@ -674,7 +668,6 @@
             </div>
           </article>
 
-          <!-- Hiring Needs (Team) -->
           <article id="page-hiring-needs" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">
               <span>Team & Operations</span>
@@ -731,37 +724,83 @@
   </div>
 
   <script>
-    // Updated Sidebar mapping to fit the new focused pages
     const SIDEBAR_ITEMS = [
       {
         category: 'Product',
         items: [
           { title: 'What Is CONVICTION?', href: '#what-is-conviction' },
-          { title: 'How It Works', href: '#how-it-works' },
+          { title: 'How It Works (3 Steps)', href: '#how-it-works' },
           { title: 'Core Mechanics', href: '#core-mechanics' },
-          { title: 'Markets & Competitors', href: '#markets' },
-          { title: 'Reputation System', href: '#reputation' }
+          { title: 'Markets', href: '#markets' },
+          { title: 'Conviction Score (0-100)', href: '#reputation' },
+          { title: 'Level System (1-50)', href: '#level-system' },
+          { title: 'User-Generated Markets', href: '#user-generated-markets' }
         ]
       },
       {
         category: 'Incentives & Rewards',
         items: [
-          { title: 'Launch Incentives', href: '#user-incentives' }
+          { title: 'Deposit $100, Get $100', href: '#user-incentives' },
+          { title: 'First Loss Protected', href: '#first-loss-protected' },
+          { title: 'Refer a Degen, Get $25', href: '#refer-a-degen' },
+          { title: 'Zero Fees (Early)', href: '#zero-fees' },
+          { title: 'Points & XP System', href: '#points-xp' },
+          { title: 'Milestone Rewards', href: '#milestone-rewards' }
         ]
       },
       {
-        category: 'Strategy & Roadmap',
+        category: 'Marketing & Community',
         items: [
-          { title: 'Project Roadmap', href: '#roadmap' },
-          { title: 'Hiring Needs', href: '#hiring-needs' },
-          { title: 'Marketing (Soon)', href: '#marketing' },
-          { title: 'Tokenomics (Soon)', href: '#tokenomics' }
+          { title: 'GTM Strategy', href: '#gtm-strategy' },
+          { title: 'Twitter Strategy', href: '#twitter-strategy' },
+          { title: 'KOL & Curator Onboarding', href: '#kol-onboarding' },
+          { title: 'Referral Program', href: '#marketing-referral' },
+          { title: 'Viral Loops', href: '#viral-loops' },
+          { title: 'Launch Campaign', href: '#launch-campaign' }
+        ]
+      },
+      {
+        category: 'Tokenomics & Business',
+        items: [
+          { title: 'Revenue Streams', href: '#revenue-streams' },
+          { title: 'Points Program', href: '#points-program' },
+          { title: 'Token Utility (V2)', href: '#token-utility' },
+          { title: 'Unit Economics', href: '#unit-economics' }
+        ]
+      },
+      {
+        category: 'Design',
+        items: [
+          { title: 'Brand Guidelines', href: '#brand-guidelines' },
+          { title: 'UI/UX Principles', href: '#ui-ux' },
+          { title: 'Screens & Components', href: '#screens-components' },
+          { title: 'User Flows', href: '#user-flows' }
         ]
       },
       {
         category: 'Tech',
         items: [
-          { title: 'Tech Stack (Soon)', href: '#tech-stack' }
+          { title: 'Tech Stack', href: '#tech-stack' },
+          { title: 'Architecture', href: '#architecture' },
+          { title: 'API Integrations', href: '#api-integrations' }
+        ]
+      },
+      {
+        category: 'Team & Operations',
+        items: [
+          { title: 'Team Structure', href: '#team-structure' },
+          { title: 'Hiring Needs', href: '#hiring-needs' },
+          { title: 'Legal & Compliance', href: '#legal' },
+          { title: 'Risk Management', href: '#risk-management' }
+        ]
+      },
+      {
+        category: 'Roadmap',
+        items: [
+          { title: 'MVP (Now)', href: '#roadmap' },
+          { title: 'V1.5 (Post-MVP)', href: '#roadmap-v15' },
+          { title: 'V2.0 (Scale)', href: '#roadmap-v20' },
+          { title: 'Fundraising Timeline', href: '#fundraising' }
         ]
       }
     ];
@@ -769,10 +808,10 @@
     const CARDS_DATA = [
       { title: 'Product & Mechanics', description: 'Learn about CONVICTION, core mechanics (BACK/FADE), user-generated markets, and the Level System.', icon: 'book-open', href: '#what-is-conviction' },
       { title: 'Incentives & Rewards', description: 'Explore our deposit bonuses, first loss protection, referral program, and milestone ecosystem.', icon: 'gift', href: '#user-incentives' },
-      { title: 'Strategy & Roadmap', description: 'Track our progress from MVP to V2.0 (Scale) and view our current hiring needs.', icon: 'map', href: '#roadmap' },
-      { title: 'Markets', description: 'KOL Battles, Meme & Culture, AI meta and how we compete against Polymarket.', icon: 'trending-up', href: '#markets' },
-      { title: 'Reputation System', description: 'Understand your Conviction Score, the 1-50 Level System, and how to unlock PROVE IT.', icon: 'shield', href: '#reputation' },
-      { title: 'Join the Squad', description: 'We are looking for fast-shipping, CT-native operators. Check out our open roles.', icon: 'users', href: '#hiring-needs' }
+      { title: 'Roadmap & Strategy', description: 'Track our progress from MVP to V2.0 (Scale) and view our current hiring needs.', icon: 'map', href: '#roadmap' },
+      { title: 'Marketing & Community', description: 'Discover our GTM strategy, Twitter approach, and viral loops to conquer CT.', icon: 'megaphone', href: '#gtm-strategy' },
+      { title: 'Tokenomics & Business', description: 'Understand revenue streams, the points program, and future token utility.', icon: 'coins', href: '#revenue-streams' },
+      { title: 'Tech & Architecture', description: 'Dive into our tech stack, wallet integrations, and API architecture.', icon: 'code', href: '#tech-stack' }
     ];
 
     // IDs of pages that actually have content
@@ -781,10 +820,40 @@
       'how-it-works', 
       'core-mechanics', 
       'markets', 
-      'reputation', 
+      'reputation',
+      'level-system',
+      'user-generated-markets',
       'user-incentives', 
+      'first-loss-protected',
+      'refer-a-degen',
+      'zero-fees',
+      'points-xp',
+      'milestone-rewards',
+      'gtm-strategy',
+      'twitter-strategy',
+      'kol-onboarding',
+      'marketing-referral',
+      'viral-loops',
+      'launch-campaign',
+      'revenue-streams',
+      'points-program',
+      'token-utility',
+      'unit-economics',
+      'brand-guidelines',
+      'ui-ux',
+      'screens-components',
+      'user-flows',
+      'tech-stack',
+      'architecture',
+      'api-integrations',
+      'team-structure',
+      'hiring-needs',
+      'legal',
+      'risk-management',
       'roadmap', 
-      'hiring-needs'
+      'roadmap-v15',
+      'roadmap-v20',
+      'fundraising'
     ];
 
     const sidebar = document.getElementById('sidebar');
@@ -940,6 +1009,26 @@
 
     renderCards();
     showView(currentHash());
+
+    // Badge Animation
+    const badges = document.querySelectorAll('#animated-badges .badge-item');
+    let currentBadgeIndex = 0;
+    
+    setInterval(() => {
+      // Remover clases activas y añadir inactivas a todos
+      badges.forEach(badge => {
+        badge.classList.remove('bg-black', 'text-white', 'border-transparent');
+        badge.classList.add('bg-zinc-200/50', 'text-black', 'border-zinc-200');
+      });
+      
+      // Incrementar el índice y volver a 0 si llega al final
+      currentBadgeIndex = (currentBadgeIndex + 1) % badges.length;
+      
+      // Añadir clases activas al badge actual
+      const activeBadge = badges[currentBadgeIndex];
+      activeBadge.classList.remove('bg-zinc-200/50', 'text-black', 'border-zinc-200');
+      activeBadge.classList.add('bg-black', 'text-white', 'border-transparent');
+    }, 2000);
   </script>
 </body>
 </html>
