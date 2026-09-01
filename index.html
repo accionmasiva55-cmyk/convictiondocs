@@ -45,6 +45,52 @@
       mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
+    /* Lifecycle cards: auto-highlight cycle (mirrors the hover state) */
+    .lc-card.is-active {
+      border-color: #18181b;
+      transform: translateY(-0.375rem);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+    }
+    .lc-card.is-active .lc-line {
+      opacity: 1;
+      background-image: linear-gradient(to right, transparent, #18181b, transparent);
+    }
+    .lc-card.is-active .lc-blob { opacity: 0.6; }
+    .lc-card.is-active .lc-icon {
+      background-color: #18181b;
+      border-color: #18181b;
+      color: #fff;
+    }
+    .lc-card.is-active .lc-copy { color: #27272a; }
+    /* Market lifecycle phases: auto-highlight cycle */
+    .ph-stage.is-active { z-index: 20; }
+    .ph-stage.is-active .ph-node {
+      background-color: #18181b;
+      border-color: #18181b;
+      color: #fff;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    }
+    .ph-ping { opacity: 0; }
+    .ph-stage.is-active .ph-ping {
+      opacity: 0.25;
+      animation: ph-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+    @keyframes ph-ping {
+      75%, 100% { transform: scale(1.5); opacity: 0; }
+    }
+    .ph-stage.is-active .ph-card {
+      border-color: #18181b;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      transform: translateY(-0.25rem);
+    }
+    .ph-bar { opacity: 0; transition: opacity 0.3s ease; }
+    .ph-stage.is-active .ph-bar { opacity: 1; }
+    .ph-stage.is-active .ph-chip { background-color: #18181b; color: #fff; }
+    @media (prefers-reduced-motion: reduce) {
+      .lc-card.is-active { transform: none; }
+      .ph-stage.is-active .ph-card { transform: none; }
+      .ph-stage.is-active .ph-ping { animation: none; }
+    }
   </style>
 </head>
 <body class="min-h-screen bg-[#F4F4F5] text-black selection:bg-black selection:text-white">
@@ -458,61 +504,94 @@
 
             </div>
 
-            <!-- Minimalist Graphics Section -->
+            <!-- Simplified Flow -->
             <div class="mt-16 pt-16 border-t border-zinc-200/60 max-w-3xl mx-auto">
-              <h4 class="text-[11px] font-mono text-zinc-400 uppercase tracking-widest text-center mb-16">Simplified Flow</h4>
-              
-              <div class="flex flex-col sm:flex-row items-center justify-between gap-10 sm:gap-0 max-w-2xl mx-auto relative z-10">
-                <!-- Connecting Line Background (Desktop) -->
-                <div class="hidden sm:block absolute top-[28px] left-[15%] right-[15%] h-px bg-zinc-200 -z-10"></div>
-                
-                <!-- Node 1: The Call -->
-                <div class="flex flex-col items-center gap-5 bg-white px-4">
-                  <div class="w-14 h-14 rounded-full border-[1.5px] border-zinc-200 flex items-center justify-center bg-white text-zinc-400 hover:border-[#1DA1F2] hover:text-[#1DA1F2] transition-colors cursor-default">
-                     <i data-lucide="twitter" class="w-6 h-6 opacity-40 hover:opacity-100 transition-opacity"></i>
+              <h4 class="text-[11px] font-mono text-zinc-400 uppercase tracking-widest text-center mb-10">Simplified Flow</h4>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <!-- 01 The Call -->
+                <div class="flex flex-col rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+                  <div class="flex items-center gap-2 mb-4">
+                    <span class="font-mono text-[11px] font-bold text-zinc-300">01</span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-500">The Call</span>
                   </div>
-                  <span class="text-[12px] font-mono font-bold text-zinc-500 uppercase tracking-widest">1. THE CALL</span>
+                  <div class="rounded-xl border border-zinc-200 bg-[#FAFAFA] p-3 mb-4">
+                    <div class="flex items-center gap-2 mb-2">
+                      <img src="https://i.imgur.com/DCnGrB1.png" alt="" class="w-5 h-5 rounded-full object-cover bg-zinc-200" />
+                      <span class="text-[11px] font-bold text-[#18181b]">Ansem</span>
+                      <span class="text-[11px] text-zinc-400">@blknoiz06</span>
+                    </div>
+                    <p class="text-[13px] font-medium text-[#18181b] leading-snug">&ldquo;ETH &gt; $8K before 2027&rdquo;</p>
+                  </div>
+                  <p class="text-[13px] text-zinc-500 leading-relaxed mt-auto">A KOL posts a claim with a number and a date. Every tweet is a market.</p>
                 </div>
 
-                <!-- Node 2: Back or Fade -->
-                <div class="flex flex-col items-center gap-5 bg-white px-4">
-                  <div class="flex items-center gap-2 bg-white border-[1.5px] border-zinc-200 rounded-full p-2 shadow-sm hover:border-zinc-300 transition-colors">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-[#22C55E] bg-white border border-zinc-100 shadow-sm cursor-default">
-                      <i data-lucide="trending-up" class="w-5 h-5"></i>
+                <!-- 02 Back or Fade -->
+                <div class="flex flex-col rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+                  <div class="flex items-center gap-2 mb-4">
+                    <span class="font-mono text-[11px] font-bold text-zinc-300">02</span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-500">Back or Fade</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2 mb-4">
+                    <div class="rounded-xl bg-[#DCFCE7] py-3.5 text-center">
+                      <div class="text-[13px] font-bold text-[#166534] leading-none mb-1.5">BACK</div>
+                      <div class="text-[10px] font-mono text-[#166534]/70">they are right</div>
                     </div>
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-[#EF4444] bg-white border border-zinc-100 shadow-sm cursor-default">
-                      <i data-lucide="trending-down" class="w-5 h-5"></i>
+                    <div class="rounded-xl bg-[#FEE2E2] py-3.5 text-center">
+                      <div class="text-[13px] font-bold text-[#991B1B] leading-none mb-1.5">FADE</div>
+                      <div class="text-[10px] font-mono text-[#991B1B]/70">they are wrong</div>
                     </div>
                   </div>
-                  <span class="text-[12px] font-mono font-bold text-zinc-500 uppercase tracking-widest">2. BACK OR FADE</span>
+                  <p class="text-[13px] text-zinc-500 leading-relaxed mt-auto">Pick a side and size it. The order fills instantly &mdash; put money behind what you say.</p>
                 </div>
 
-                <!-- Node 3: The Result -->
-                <div class="flex flex-col items-center gap-5 bg-white px-4">
-                  <div class="w-14 h-14 rounded-full flex items-center justify-center bg-[#18181b] text-white shadow-lg hover:scale-105 transition-transform cursor-default">
-                    <i data-lucide="check-check" class="w-6 h-6"></i>
+                <!-- 03 Resolution -->
+                <div class="flex flex-col rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+                  <div class="flex items-center gap-2 mb-4">
+                    <span class="font-mono text-[11px] font-bold text-zinc-300">03</span>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-500">Resolution</span>
                   </div>
-                  <span class="text-[12px] font-mono font-bold text-[#18181b] uppercase tracking-widest">3. RESOLUTION</span>
+                  <div class="rounded-xl border border-zinc-200 bg-[#FAFAFA] p-3 mb-4">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] font-bold uppercase tracking-wider text-[#166534]">He called it</span>
+                      <i data-lucide="check" class="w-3.5 h-3.5 text-[#166534]"></i>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-zinc-200 mt-2.5 pt-2.5">
+                      <span class="text-[11px] font-mono text-zinc-500">Conviction Score</span>
+                      <span class="text-[11px] font-mono font-bold text-[#18181b]">74 &rarr; 78</span>
+                    </div>
+                  </div>
+                  <p class="text-[13px] text-zinc-500 leading-relaxed mt-auto">Right gets paid, wrong loses the stake. Your score moves and the receipt is ready to post on X.</p>
                 </div>
+
               </div>
 
-              <!-- Minimalist Sentiment Bar -->
-              <div class="mt-20 bg-white border-[1.5px] border-zinc-200 p-6 sm:p-7 rounded-[20px] max-w-[32rem] mx-auto shadow-[0_2px_15px_-5px_rgba(0,0,0,0.03)]">
-                <div class="flex justify-between items-center mb-5">
+              <!-- Market Sentiment -->
+              <div class="mt-6 bg-white border border-zinc-200 p-6 sm:p-7 rounded-2xl max-w-[32rem] mx-auto shadow-sm">
+                <div class="flex justify-between items-center mb-4">
                   <span class="text-[11px] font-mono font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-2">
-                    <i data-lucide="activity" class="w-3.5 h-3.5"></i> IMPLIED PROBABILITY
+                    <i data-lucide="activity" class="w-3.5 h-3.5"></i> Market Sentiment
                   </span>
-                  <span class="text-[13px] font-mono font-bold text-[#18181b]">73% BACK</span>
+                  <span class="text-[12px] font-mono text-zinc-400">$180K Vol.</span>
                 </div>
-                
-                <div class="w-full h-2.5 bg-zinc-200 rounded-full overflow-hidden flex mb-4">
-                   <div class="h-full bg-[#18181b] rounded-full" style="width: 73%"></div>
+
+                <div class="flex justify-between text-[12px] font-bold mb-2">
+                  <span class="text-[#22C55E]">BACK 73%</span>
+                  <span class="text-[#EF4444]">FADE 27%</span>
                 </div>
-                
-                <div class="flex justify-between px-0.5">
-                  <span class="text-[12px] font-mono font-medium text-zinc-500">73¢</span>
-                  <span class="text-[12px] font-mono font-medium text-zinc-500">27¢</span>
+                <div class="w-full h-2.5 bg-zinc-200 rounded-full overflow-hidden flex">
+                  <div class="h-full bg-[#22C55E] rounded-l-full" style="width: 73%"></div>
+                  <div class="h-full bg-[#EF4444] rounded-r-full" style="width: 27%"></div>
                 </div>
+                <div class="flex justify-between mt-2 text-[11px] font-mono text-zinc-500">
+                  <span>73&cent;</span>
+                  <span>27&cent;</span>
+                </div>
+
+                <p class="text-[13px] text-zinc-500 leading-relaxed mt-5 pt-4 border-t border-zinc-100">
+                  The price is the crowd&rsquo;s implied probability: BACK at 73&cent; means the market is pricing a 73% chance the call lands.
+                </p>
               </div>
             </div>
           </article>
@@ -528,51 +607,71 @@
             <!-- SECTION 1: BACK / FADE -->
             <div class="mb-16">
               <h2 class="text-[24px] font-bold text-[#18181b] mb-4">1. BACK / FADE</h2>
-              <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
-                Every tweet from a KOL automatically becomes a two-sided market. There's no "maybe" — you BACK it if you think the tweet will come true, or FADE it if you think it won't. The price on each side reflects the market's implied probability, the same way Polymarket works: if BACK costs $0.70, the market is pricing a 70% chance the event happens.
-              </p>
-              
-              <!-- GRAPHIC 1: Decision flow diagram -->
-              <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 flex flex-col items-center shadow-inner relative overflow-hidden max-w-3xl">
-                <!-- Decorative background elements -->
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[200px] bg-gradient-to-b from-zinc-200/50 to-transparent pointer-events-none"></div>
 
-                <div class="relative z-10 w-full max-w-sm flex flex-col items-center">
-                  <!-- Central Node -->
-                  <div class="bg-white border-2 border-zinc-200 rounded-2xl px-6 py-4 shadow-sm text-center mb-6 w-full relative group hover:border-black transition-colors">
-                    <div class="flex items-center justify-center gap-2 mb-1">
-                      <i data-lucide="twitter" class="w-4 h-4 text-[#1DA1F2] fill-current"></i>
-                      <span class="text-[12px] font-bold text-zinc-500 uppercase tracking-widest">The Catalyst</span>
+              <div class="space-y-4 max-w-3xl mb-8">
+                <p class="text-[16px] text-zinc-600 leading-relaxed">
+                  Every tweet from a KOL becomes a two-sided market. There is no &ldquo;maybe&rdquo;: you <strong class="text-[#166534] font-medium">BACK</strong> the call if you think it lands, or <strong class="text-[#991B1B] font-medium">FADE</strong> it if you think it does not. Both sides stay open for as long as the market is live.
+                </p>
+                <p class="text-[16px] text-zinc-600 leading-relaxed">
+                  Prices are quoted in cents, and every share settles at <strong class="text-black font-medium">$1.00</strong> if its side is right and <strong class="text-black font-medium">$0.00</strong> if it is wrong. That makes the price the market&rsquo;s implied probability: BACK trading at 70&cent; means the crowd is pricing a 70% chance the call lands. The two sides always add up to $1.00 &mdash; if BACK is 70&cent;, FADE is 30&cent;.
+                </p>
+                <p class="text-[16px] text-zinc-600 leading-relaxed">
+                  Your downside is capped at what you paid. Buy 100 BACK shares at 70&cent; and you stake $70 to win $100. Take the other side and $30 wins the same $100. The cheaper the side, the bigger the payoff for being right &mdash; markets reward clarity, not noise.
+                </p>
+              </div>
+
+              <!-- GRAPHIC 1: Decision flow -->
+              <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 shadow-inner max-w-3xl">
+                <div class="w-full max-w-md mx-auto">
+
+                  <!-- The Call -->
+                  <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-4 shadow-sm text-center">
+                    <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-2">The Call</div>
+                    <p class="text-[15px] font-bold text-[#18181b] leading-snug">&ldquo;ETH &gt; $8K before 2027&rdquo;</p>
+                    <p class="text-[11px] font-mono text-zinc-400 mt-1.5">@blknoiz06 &middot; resolves Jan 1, 2027</p>
+                  </div>
+
+                  <!-- Connector -->
+                  <div class="relative grid grid-cols-2 gap-4 h-10" aria-hidden="true">
+                    <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                    <div class="relative">
+                      <div class="absolute left-1/2 -right-2 top-1/2 h-px bg-zinc-300"></div>
+                      <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
                     </div>
-                    <span class="text-[18px] font-extrabold text-[#18181b]">Tweet from a KOL</span>
+                    <div class="relative">
+                      <div class="absolute -left-2 right-1/2 top-1/2 h-px bg-zinc-300"></div>
+                      <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
+                    </div>
                   </div>
 
-                  <!-- Path Split SVG -->
-                  <div class="relative w-full h-12 flex justify-center mb-6">
-                    <svg class="absolute w-[80%] h-[120%] top-[-10px] text-zinc-300" viewBox="0 0 100 50" preserveAspectRatio="none" fill="none">
-                      <path d="M50 0 V20 Q50 30 20 30 H0" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                      <path d="M50 0 V20 Q50 30 80 30 H100" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                    </svg>
-                  </div>
-
-                  <!-- Outcomes -->
-                  <div class="flex w-full justify-between gap-4">
-                    <div class="flex-1 bg-white border-2 border-[#22C55E]/30 rounded-2xl px-4 py-4 shadow-sm text-center">
-                      <div class="w-10 h-10 bg-[#DCFCE7] rounded-full flex items-center justify-center mx-auto mb-2">
-                        <i data-lucide="trending-up" class="w-5 h-5 text-[#166534]"></i>
+                  <!-- The two sides -->
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+                      <div class="flex items-center gap-2 mb-3">
+                        <span class="w-7 h-7 rounded-lg bg-[#DCFCE7] text-[#166534] flex items-center justify-center shrink-0">
+                          <i data-lucide="trending-up" class="w-4 h-4"></i>
+                        </span>
+                        <span class="text-[13px] font-bold uppercase tracking-wider text-[#166534]">BACK</span>
                       </div>
-                      <h4 class="text-[16px] font-bold text-[#166534] mb-1">BACK</h4>
-                      <p class="text-[13px] text-zinc-500 font-medium leading-tight">You agree</p>
+                      <div class="font-mono text-[22px] font-bold text-[#18181b] leading-none mb-2">70&cent;</div>
+                      <p class="text-[13px] font-medium text-zinc-600 leading-tight mb-1">You agree</p>
+                      <p class="text-[11px] font-mono text-zinc-400 leading-tight">Pays $1.00 if it lands</p>
                     </div>
 
-                    <div class="flex-1 bg-white border-2 border-[#EF4444]/30 rounded-2xl px-4 py-4 shadow-sm text-center">
-                      <div class="w-10 h-10 bg-[#FEE2E2] rounded-full flex items-center justify-center mx-auto mb-2">
-                        <i data-lucide="trending-down" class="w-5 h-5 text-[#991B1B]"></i>
+                    <div class="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+                      <div class="flex items-center gap-2 mb-3">
+                        <span class="w-7 h-7 rounded-lg bg-[#FEE2E2] text-[#991B1B] flex items-center justify-center shrink-0">
+                          <i data-lucide="trending-down" class="w-4 h-4"></i>
+                        </span>
+                        <span class="text-[13px] font-bold uppercase tracking-wider text-[#991B1B]">FADE</span>
                       </div>
-                      <h4 class="text-[16px] font-bold text-[#991B1B] mb-1">FADE</h4>
-                      <p class="text-[13px] text-zinc-500 font-medium leading-tight">You disagree</p>
+                      <div class="font-mono text-[22px] font-bold text-[#18181b] leading-none mb-2">30&cent;</div>
+                      <p class="text-[13px] font-medium text-zinc-600 leading-tight mb-1">You disagree</p>
+                      <p class="text-[11px] font-mono text-zinc-400 leading-tight">Pays $1.00 if it does not</p>
                     </div>
                   </div>
+
+                  <p class="text-[11px] font-mono text-zinc-400 text-center mt-6">70&cent; + 30&cent; = $1.00 &middot; the price is the implied probability</p>
                 </div>
               </div>
             </div>
@@ -588,19 +687,21 @@
               <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-6 sm:p-10 shadow-inner mb-10 max-w-3xl relative overflow-hidden">
                 <!-- Terminal/Tech Pattern Background -->
                 <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(#18181b 1px, transparent 1px); background-size: 20px 20px;"></div>
-                
-                <div class="relative z-10 max-w-2xl mx-auto">
+
+                <div id="market-lifecycle" class="relative z-10 max-w-2xl mx-auto">
                   <!-- Continuous Line -->
                   <div class="absolute left-[27px] sm:left-[31px] top-8 bottom-8 w-0.5 bg-zinc-200"></div>
 
                   <!-- Stage 1 -->
-                  <div class="relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                  <div class="ph-stage relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
+                    <div class="ph-node w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                      <div class="ph-ping absolute inset-0 rounded-full border-2 border-[#18181b] pointer-events-none"></div>
                       <i data-lucide="radar" class="w-6 h-6"></i>
                     </div>
-                    <div class="flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                    <div class="ph-card flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm relative overflow-hidden group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                      <div class="ph-bar absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
                       <div class="flex items-center gap-3 mb-2">
-                        <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 1</span>
+                        <span class="ph-chip text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 1</span>
                         <h3 class="text-[17px] sm:text-[19px] font-extrabold text-[#18181b] leading-none tracking-tight">Tweet detected</h3>
                       </div>
                       <p class="text-[14px] text-zinc-600 leading-relaxed">By a platform curator or a Level 10+ user via PROVE IT.</p>
@@ -608,29 +709,31 @@
                   </div>
 
                   <!-- Stage 2 -->
-                  <div class="relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                  <div class="ph-stage relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
+                    <div class="ph-node w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                      <div class="ph-ping absolute inset-0 rounded-full border-2 border-[#18181b] pointer-events-none"></div>
                       <i data-lucide="book-open-check" class="w-6 h-6"></i>
                     </div>
-                    <div class="flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                    <div class="ph-card flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm relative overflow-hidden group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                      <div class="ph-bar absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
                       <div class="flex items-center gap-3 mb-2">
-                        <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 2</span>
+                        <span class="ph-chip text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 2</span>
                         <h3 class="text-[17px] sm:text-[19px] font-extrabold text-[#18181b] leading-none tracking-tight">Market opens</h3>
                       </div>
                       <p class="text-[14px] text-zinc-600 leading-relaxed">Explicit resolution criteria and deadlines are set in stone.</p>
                     </div>
                   </div>
 
-                  <!-- Stage 3 (Highlighted) -->
-                  <div class="relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group z-20">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#18181b] border-[3px] border-[#18181b] text-white flex items-center justify-center shrink-0 relative shadow-lg">
-                      <div class="absolute inset-0 rounded-full border-2 border-[#18181b] animate-ping opacity-20"></div>
+                  <!-- Stage 3 -->
+                  <div class="ph-stage relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
+                    <div class="ph-node w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                      <div class="ph-ping absolute inset-0 rounded-full border-2 border-[#18181b] pointer-events-none"></div>
                       <i data-lucide="activity" class="w-6 h-6"></i>
                     </div>
-                    <div class="flex-1 bg-white border-2 border-[#18181b] rounded-2xl p-5 sm:p-6 shadow-lg relative overflow-hidden transform group-hover:-translate-y-1 transition-transform duration-300">
-                      <div class="absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
+                    <div class="ph-card flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm relative overflow-hidden group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                      <div class="ph-bar absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
                       <div class="flex items-center gap-3 mb-2">
-                        <span class="text-[11px] font-mono font-bold text-white bg-[#18181b] px-2 py-1 rounded-md uppercase tracking-widest">Phase 3</span>
+                        <span class="ph-chip text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 3</span>
                         <h3 class="text-[17px] sm:text-[19px] font-extrabold text-[#18181b] leading-none tracking-tight">Trading window</h3>
                       </div>
                       <p class="text-[14px] text-zinc-600 leading-relaxed">Users buy shares for <strong class="text-black">BACK</strong> or <strong class="text-black">FADE</strong> based on their conviction. Market dictates the live probability.</p>
@@ -638,13 +741,15 @@
                   </div>
 
                   <!-- Stage 4 -->
-                  <div class="relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                  <div class="ph-stage relative flex items-start gap-4 sm:gap-6 mb-6 sm:mb-8 group">
+                    <div class="ph-node w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                      <div class="ph-ping absolute inset-0 rounded-full border-2 border-[#18181b] pointer-events-none"></div>
                       <i data-lucide="check-circle-2" class="w-6 h-6"></i>
                     </div>
-                    <div class="flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                    <div class="ph-card flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm relative overflow-hidden group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                      <div class="ph-bar absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
                       <div class="flex items-center gap-3 mb-2">
-                        <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 4</span>
+                        <span class="ph-chip text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 4</span>
                         <h3 class="text-[17px] sm:text-[19px] font-extrabold text-[#18181b] leading-none tracking-tight">Market resolves</h3>
                       </div>
                       <p class="text-[14px] text-zinc-600 leading-relaxed">Deadline is reached; real-world outcome is officially verified.</p>
@@ -652,13 +757,15 @@
                   </div>
 
                   <!-- Stage 5 -->
-                  <div class="relative flex items-start gap-4 sm:gap-6 group">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                  <div class="ph-stage relative flex items-start gap-4 sm:gap-6 group">
+                    <div class="ph-node w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white border-[3px] border-zinc-200 text-zinc-400 flex items-center justify-center shrink-0 relative z-10 group-hover:border-[#18181b] group-hover:text-[#18181b] group-hover:shadow-md transition-all duration-300">
+                      <div class="ph-ping absolute inset-0 rounded-full border-2 border-[#18181b] pointer-events-none"></div>
                       <i data-lucide="coins" class="w-6 h-6"></i>
                     </div>
-                    <div class="flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                    <div class="ph-card flex-1 bg-white border border-zinc-200 rounded-2xl p-5 sm:p-6 shadow-sm relative overflow-hidden group-hover:border-[#18181b] group-hover:shadow-md transition-all duration-300 transform group-hover:-translate-y-1">
+                      <div class="ph-bar absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
                       <div class="flex items-center gap-3 mb-2">
-                        <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 5</span>
+                        <span class="ph-chip text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest group-hover:bg-[#18181b] group-hover:text-white transition-colors">Phase 5</span>
                         <h3 class="text-[17px] sm:text-[19px] font-extrabold text-[#18181b] leading-none tracking-tight">Payout + Score update</h3>
                       </div>
                       <p class="text-[14px] text-zinc-600 leading-relaxed">Winners receive funds. Everyone's Conviction Score adjusts.</p>
@@ -669,52 +776,52 @@
               </div>
 
               <!-- Lifecycle Sub-bullets -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl">
+              <div id="lifecycle-cards" class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl">
                 <!-- Card 1 -->
-                <div class="group relative p-6 sm:p-8 bg-white border border-zinc-200 rounded-[24px] shadow-sm hover:shadow-xl hover:border-[#18181b] transition-all duration-300 flex flex-col hover:-translate-y-1.5 overflow-hidden">
+                <div class="lc-card group relative p-6 sm:p-8 bg-white border border-zinc-200 rounded-[24px] shadow-sm hover:shadow-xl hover:border-[#18181b] transition-all duration-300 flex flex-col hover:-translate-y-1.5 overflow-hidden">
                   <!-- Animated top border line -->
-                  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-400 to-transparent group-hover:via-[#18181b] transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                  <div class="lc-line absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-400 to-transparent group-hover:via-[#18181b] transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                   <!-- Subtle background blur effect on hover -->
-                  <div class="absolute -right-12 -top-12 w-32 h-32 bg-zinc-100 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
+                  <div class="lc-blob absolute -right-12 -top-12 w-32 h-32 bg-zinc-100 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
                   
                   <div class="relative z-10 flex-1 flex flex-col">
-                    <div class="w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center mb-6 text-zinc-500 group-hover:bg-[#18181b] group-hover:text-white group-hover:border-[#18181b] transition-all duration-300 shadow-sm">
+                    <div class="lc-icon w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center mb-6 text-zinc-500 group-hover:bg-[#18181b] group-hover:text-white group-hover:border-[#18181b] transition-all duration-300 shadow-sm">
                       <i data-lucide="scale" class="w-5 h-5"></i>
                     </div>
                     <h4 class="text-[17px] font-extrabold text-[#18181b] mb-3 tracking-tight">Resolution Criteria</h4>
-                    <p class="text-[14.5px] text-zinc-500 leading-relaxed group-hover:text-zinc-800 transition-colors duration-300">
+                    <p class="lc-copy text-[14.5px] text-zinc-500 leading-relaxed group-hover:text-zinc-800 transition-colors duration-300">
                       Defined rigidly at market inception by Curators or Level 10+ users. It uses verifiable data sources (e.g., Coingecko for prices, official announcements for events). No room for interpretation.
                     </p>
                   </div>
                 </div>
                 
                 <!-- Card 2 -->
-                <div class="group relative p-6 sm:p-8 bg-white border border-zinc-200 rounded-[24px] shadow-sm hover:shadow-xl hover:border-[#18181b] transition-all duration-300 flex flex-col hover:-translate-y-1.5 overflow-hidden">
-                  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-400 to-transparent group-hover:via-[#18181b] transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-                  <div class="absolute -right-12 -top-12 w-32 h-32 bg-zinc-100 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
+                <div class="lc-card group relative p-6 sm:p-8 bg-white border border-zinc-200 rounded-[24px] shadow-sm hover:shadow-xl hover:border-[#18181b] transition-all duration-300 flex flex-col hover:-translate-y-1.5 overflow-hidden">
+                  <div class="lc-line absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-400 to-transparent group-hover:via-[#18181b] transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                  <div class="lc-blob absolute -right-12 -top-12 w-32 h-32 bg-zinc-100 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
                   
                   <div class="relative z-10 flex-1 flex flex-col">
-                    <div class="w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center mb-6 text-zinc-500 group-hover:bg-[#18181b] group-hover:text-white group-hover:border-[#18181b] transition-all duration-300 shadow-sm">
+                    <div class="lc-icon w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center mb-6 text-zinc-500 group-hover:bg-[#18181b] group-hover:text-white group-hover:border-[#18181b] transition-all duration-300 shadow-sm">
                       <i data-lucide="trash-2" class="w-5 h-5"></i>
                     </div>
                     <h4 class="text-[17px] font-extrabold text-[#18181b] mb-3 tracking-tight">Deleted Tweets</h4>
-                    <p class="text-[14.5px] text-zinc-500 leading-relaxed group-hover:text-zinc-800 transition-colors duration-300">
+                    <p class="lc-copy text-[14.5px] text-zinc-500 leading-relaxed group-hover:text-zinc-800 transition-colors duration-300">
                       We keep the receipts. The market settles based on the exact original wording captured at creation. If a KOL deletes or edits their tweet, the market remains active and resolves normally.
                     </p>
                   </div>
                 </div>
                 
                 <!-- Card 3 -->
-                <div class="group relative p-6 sm:p-8 bg-white border border-zinc-200 rounded-[24px] shadow-sm hover:shadow-xl hover:border-[#18181b] transition-all duration-300 flex flex-col hover:-translate-y-1.5 overflow-hidden">
-                  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-400 to-transparent group-hover:via-[#18181b] transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
-                  <div class="absolute -right-12 -top-12 w-32 h-32 bg-zinc-100 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
+                <div class="lc-card group relative p-6 sm:p-8 bg-white border border-zinc-200 rounded-[24px] shadow-sm hover:shadow-xl hover:border-[#18181b] transition-all duration-300 flex flex-col hover:-translate-y-1.5 overflow-hidden">
+                  <div class="lc-line absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-zinc-400 to-transparent group-hover:via-[#18181b] transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
+                  <div class="lc-blob absolute -right-12 -top-12 w-32 h-32 bg-zinc-100 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none"></div>
                   
                   <div class="relative z-10 flex-1 flex flex-col">
-                    <div class="w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center mb-6 text-zinc-500 group-hover:bg-[#18181b] group-hover:text-white group-hover:border-[#18181b] transition-all duration-300 shadow-sm">
+                    <div class="lc-icon w-12 h-12 rounded-full bg-zinc-50 border border-zinc-200 flex items-center justify-center mb-6 text-zinc-500 group-hover:bg-[#18181b] group-hover:text-white group-hover:border-[#18181b] transition-all duration-300 shadow-sm">
                       <i data-lucide="clock" class="w-5 h-5"></i>
                     </div>
                     <h4 class="text-[17px] font-extrabold text-[#18181b] mb-3 tracking-tight">Time Window</h4>
-                    <p class="text-[14.5px] text-zinc-500 leading-relaxed group-hover:text-zinc-800 transition-colors duration-300">
+                    <p class="lc-copy text-[14.5px] text-zinc-500 leading-relaxed group-hover:text-zinc-800 transition-colors duration-300">
                       Typically ranges from 24 hours (for fast-paced CT drama) to 6 months (for macro calls). The exact lock and resolution times are always visible before you place a trade.
                     </p>
                   </div>
@@ -725,52 +832,79 @@
             <!-- SECTION 3: Receipts -->
             <div class="mb-10">
               <h2 class="text-[24px] font-bold text-[#18181b] mb-4">3. Receipts</h2>
-              <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
-                The outcome turns into an immediate social artifact: "HE CALLED IT" if you were right, "BAD CALL" if you weren't. Both are shareable on X in one click — this isn't just cosmetic, it's the product's main organic growth loop: every shared receipt is free marketing with built-in context.
-              </p>
+
+              <div class="space-y-4 max-w-3xl mb-8">
+                <p class="text-[16px] text-zinc-600 leading-relaxed">
+                  The internet talks. We keep the receipts. The moment a market resolves, your position turns into a social artifact: <strong class="text-[#166534] font-medium">HE CALLED IT</strong> if you were right, <strong class="text-[#991B1B] font-medium">BAD CALL</strong> if you were not. It is permanent, it is tied to your handle, and it is public either way.
+                </p>
+                <p class="text-[16px] text-zinc-600 leading-relaxed">
+                  One click posts it to X with the original tweet, the side you took and the outcome already baked in. Nothing to screenshot, nothing to explain &mdash; the context travels with the receipt.
+                </p>
+                <p class="text-[16px] text-zinc-600 leading-relaxed">
+                  This is not cosmetic. Receipts are the product&rsquo;s main organic growth loop: every one posted is free marketing with proof attached, and it feeds straight back in &mdash; sharing a receipt earns XP, and the outcome behind it moves your Conviction Score.
+                </p>
+              </div>
 
               <!-- GRAPHIC 3: Outcome diagram -->
-              <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 flex flex-col items-center shadow-inner max-w-3xl">
-                
-                <div class="flex flex-col sm:flex-row gap-6 w-full max-w-md justify-between mb-8">
-                  <!-- WIN Card -->
-                  <div class="flex-1 bg-white border border-[#22C55E]/40 shadow-sm rounded-2xl p-5 flex flex-col items-center justify-center transform hover:-translate-y-1 transition-transform">
-                    <div class="w-12 h-12 bg-[#DCFCE7] rounded-full flex items-center justify-center mb-3">
-                      <i data-lucide="crown" class="w-6 h-6 text-[#166534]"></i>
+              <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 shadow-inner max-w-3xl">
+                <div class="w-full max-w-md mx-auto">
+
+                  <!-- The two outcomes -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="bg-white border border-zinc-200 rounded-2xl p-5 shadow-sm">
+                      <div class="flex items-center gap-2.5 mb-4">
+                        <span class="w-8 h-8 rounded-lg bg-[#DCFCE7] text-[#166534] flex items-center justify-center shrink-0">
+                          <i data-lucide="crown" class="w-4 h-4"></i>
+                        </span>
+                        <span class="text-[13px] font-bold uppercase tracking-wider text-[#166534]">He called it</span>
+                      </div>
+                      <div class="space-y-1.5 text-[12px] font-mono">
+                        <div class="flex justify-between"><span class="text-zinc-400">Position</span><span class="text-[#18181b]">BACK 70&cent;</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-400">Result</span><span class="font-bold text-[#166534]">+$30.00</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-400">Score</span><span class="text-[#18181b]">74 &rarr; 78</span></div>
+                      </div>
                     </div>
-                    <span class="text-[14px] font-bold text-[#166534] tracking-wider">HE CALLED IT</span>
-                    <span class="text-[12px] text-zinc-500 mt-1">Winning Trade</span>
-                  </div>
 
-                  <!-- LOSE Card -->
-                  <div class="flex-1 bg-white border border-[#EF4444]/40 shadow-sm rounded-2xl p-5 flex flex-col items-center justify-center transform hover:-translate-y-1 transition-transform">
-                    <div class="w-12 h-12 bg-[#FEE2E2] rounded-full flex items-center justify-center mb-3">
-                      <i data-lucide="skull" class="w-6 h-6 text-[#991B1B]"></i>
+                    <div class="bg-white border border-zinc-200 rounded-2xl p-5 shadow-sm">
+                      <div class="flex items-center gap-2.5 mb-4">
+                        <span class="w-8 h-8 rounded-lg bg-[#FEE2E2] text-[#991B1B] flex items-center justify-center shrink-0">
+                          <i data-lucide="skull" class="w-4 h-4"></i>
+                        </span>
+                        <span class="text-[13px] font-bold uppercase tracking-wider text-[#991B1B]">Bad call</span>
+                      </div>
+                      <div class="space-y-1.5 text-[12px] font-mono">
+                        <div class="flex justify-between"><span class="text-zinc-400">Position</span><span class="text-[#18181b]">FADE 30&cent;</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-400">Result</span><span class="font-bold text-[#991B1B]">&minus;$30.00</span></div>
+                        <div class="flex justify-between"><span class="text-zinc-400">Score</span><span class="text-[#18181b]">74 &rarr; 71</span></div>
+                      </div>
                     </div>
-                    <span class="text-[14px] font-bold text-[#991B1B] tracking-wider">BAD CALL</span>
-                    <span class="text-[12px] text-zinc-500 mt-1">Losing Trade</span>
                   </div>
-                </div>
 
-                <!-- Converging Path -->
-                <div class="flex justify-center items-center w-full mb-8 relative h-10">
-                  <svg class="absolute w-[60%] h-full text-zinc-300" viewBox="0 0 100 50" preserveAspectRatio="none" fill="none">
-                    <path d="M0 0 Q20 40 50 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M100 0 Q80 40 50 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M50 40 V50" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    <polygon points="47,45 53,45 50,50" fill="currentColor" stroke="currentColor"/>
-                  </svg>
-                </div>
-
-                <!-- Share Box -->
-                <div class="w-full max-w-sm bg-[#18181b] rounded-2xl p-6 text-center text-white shadow-xl hover:shadow-2xl transition-shadow cursor-pointer group">
-                  <div class="flex items-center justify-center gap-3 mb-2">
-                    <i data-lucide="twitter" class="w-5 h-5 fill-current text-white group-hover:text-[#1DA1F2] transition-colors"></i>
-                    <h4 class="text-[18px] font-bold">Post Receipt to X</h4>
+                  <!-- Converging connector -->
+                  <div class="relative hidden sm:grid grid-cols-2 gap-6 h-10" aria-hidden="true">
+                    <div class="relative">
+                      <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                      <div class="absolute left-1/2 -right-3 top-1/2 h-px bg-zinc-300"></div>
+                    </div>
+                    <div class="relative">
+                      <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                      <div class="absolute -left-3 right-1/2 top-1/2 h-px bg-zinc-300"></div>
+                    </div>
+                    <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
                   </div>
-                  <p class="text-[14px] text-zinc-400">One click to flex your outcome on the timeline.</p>
-                </div>
+                  <div class="h-6 sm:hidden"></div>
 
+                  <!-- Share box -->
+                  <div class="bg-[#18181b] rounded-2xl p-5 text-center text-white shadow-md">
+                    <div class="flex items-center justify-center gap-2.5 mb-1.5">
+                      <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                      <h4 class="text-[15px] font-bold">Post receipt to X</h4>
+                    </div>
+                    <p class="text-[12px] text-zinc-400 leading-relaxed">The original tweet, your side and the outcome &mdash; in one click.</p>
+                    <p class="text-[11px] font-mono text-zinc-500 mt-4 pt-3 border-t border-white/10">+10 XP per receipt shared &middot; 3&times; daily</p>
+                  </div>
+
+                </div>
               </div>
             </div>
           </article>
@@ -786,35 +920,55 @@
             
             <!-- 1. Overview -->
             <p class="text-[18px] text-zinc-600 leading-relaxed mb-8 max-w-3xl">
-              Every market on CONVICTION falls into one of five categories. This isn't just a filter — it's how the feed is organized, how curators know what to look for, and how new users understand the range of what's tradeable beyond "just crypto prices."
+              Every tweet is a market &mdash; these are the five kinds of tweet that become one. The categories are not just a filter: they are how the feed is organized, how curators know what to hunt for, and how a new user sees that this goes well beyond crypto prices.
             </p>
 
-            <!-- GRAPHIC 1: 5-Box Grid / Category Map -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
+            <!-- GRAPHIC 1: Category map -->
+            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-14 max-w-4xl">
               <!-- KOL Battles -->
-              <div class="p-5 rounded-2xl bg-[#FFF7ED] border border-[#FFEDD5] hover:border-orange-300 transition-colors">
-                <h4 class="font-bold text-orange-700 text-[16px] mb-1">KOL Battles</h4>
-                <p class="text-orange-600/80 text-[13px] font-medium leading-snug">Two KOLs, opposing calls</p>
+              <div class="flex flex-col p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#18181b] transition-colors">
+                <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
+                  <i data-lucide="swords" class="w-4 h-4"></i>
+                </span>
+                <h4 class="font-bold text-[#18181b] text-[15px] mb-1 leading-tight">KOL Battles</h4>
+                <p class="text-zinc-500 text-[13px] leading-snug mb-4">Two KOLs, opposing calls</p>
+                <span class="mt-auto text-[10px] font-mono uppercase tracking-wider text-zinc-400">1&ndash;4 weeks</span>
               </div>
               <!-- Price Calls -->
-              <div class="p-5 rounded-2xl bg-[#F0FDF4] border border-[#DCFCE7] hover:border-green-300 transition-colors">
-                <h4 class="font-bold text-green-700 text-[16px] mb-1">Price Calls</h4>
-                <p class="text-green-600/80 text-[13px] font-medium leading-snug">Specific price targets</p>
+              <div class="flex flex-col p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#18181b] transition-colors">
+                <span class="w-8 h-8 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-4">
+                  <i data-lucide="trending-up" class="w-4 h-4"></i>
+                </span>
+                <h4 class="font-bold text-[#18181b] text-[15px] mb-1 leading-tight">Price Calls</h4>
+                <p class="text-zinc-500 text-[13px] leading-snug mb-4">A number and a deadline</p>
+                <span class="mt-auto text-[10px] font-mono uppercase tracking-wider text-zinc-400">1&ndash;6 months</span>
               </div>
               <!-- Market Structure -->
-              <div class="p-5 rounded-2xl bg-[#EFF6FF] border border-[#DBEAFE] hover:border-blue-300 transition-colors">
-                <h4 class="font-bold text-blue-700 text-[16px] mb-1">Market Structure</h4>
-                <p class="text-blue-600/80 text-[13px] font-medium leading-snug">Macro takes & rotation</p>
+              <div class="flex flex-col p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#18181b] transition-colors">
+                <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4">
+                  <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                </span>
+                <h4 class="font-bold text-[#18181b] text-[15px] mb-1 leading-tight">Market Structure</h4>
+                <p class="text-zinc-500 text-[13px] leading-snug mb-4">Macro takes, not single assets</p>
+                <span class="mt-auto text-[10px] font-mono uppercase tracking-wider text-zinc-400">~30 days</span>
               </div>
               <!-- Meme & Culture -->
-              <div class="p-5 rounded-2xl bg-[#FAF5FF] border border-[#F3E8FF] hover:border-purple-300 transition-colors lg:col-start-1 lg:ml-auto lg:w-full lg:max-w-xs">
-                <h4 class="font-bold text-purple-700 text-[16px] mb-1">Meme & Culture</h4>
-                <p class="text-purple-600/80 text-[13px] font-medium leading-snug">CT drama & virality</p>
+              <div class="flex flex-col p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#18181b] transition-colors">
+                <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center mb-4">
+                  <i data-lucide="smile" class="w-4 h-4"></i>
+                </span>
+                <h4 class="font-bold text-[#18181b] text-[15px] mb-1 leading-tight">Meme &amp; Culture</h4>
+                <p class="text-zinc-500 text-[13px] leading-snug mb-4">CT drama, callouts, virality</p>
+                <span class="mt-auto text-[10px] font-mono uppercase tracking-wider text-zinc-400">24h &ndash; 7 days</span>
               </div>
               <!-- AI & Meta -->
-              <div class="p-5 rounded-2xl bg-[#F0FDFA] border border-[#CCFBF1] hover:border-teal-300 transition-colors lg:mr-auto lg:w-full lg:max-w-xs">
-                <h4 class="font-bold text-teal-700 text-[16px] mb-1">AI & Meta</h4>
-                <p class="text-teal-600/80 text-[13px] font-medium leading-snug">Future tech timelines</p>
+              <div class="col-span-2 lg:col-span-1 flex flex-col p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm hover:border-[#18181b] transition-colors">
+                <span class="w-8 h-8 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-4">
+                  <i data-lucide="cpu" class="w-4 h-4"></i>
+                </span>
+                <h4 class="font-bold text-[#18181b] text-[15px] mb-1 leading-tight">AI &amp; Meta</h4>
+                <p class="text-zinc-500 text-[13px] leading-snug mb-4">Long-horizon future calls</p>
+                <span class="mt-auto text-[10px] font-mono uppercase tracking-wider text-zinc-400">6 months+</span>
               </div>
             </div>
 
@@ -829,11 +983,11 @@
                   KOL Battles
                 </h2>
                 <p class="text-[16px] text-zinc-600 leading-relaxed mb-4 pl-11">
-                  Two KOLs, opposing calls, one market. This is the most CT-native category — it's built for the rivalry dynamic that already drives engagement on Twitter, now with money behind it.
+                  Two KOLs, opposing calls, one market. The most CT-native category there is: the rivalry already drives the timeline for free &mdash; this just puts a price on who was right.
                 </p>
                 <div class="ml-11 bg-zinc-50 border border-zinc-200 rounded-xl p-4 inline-block shadow-sm">
                   <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest block mb-1.5">Example Market</span>
-                  <span class="font-mono text-[14px] text-[#18181b] font-medium">Ansem vs ChartWizard — ETH > $8K before 2027?</span>
+                  <span class="font-mono text-[14px] text-[#18181b] font-medium">Ansem vs ChartWizard &mdash; ETH &gt; $8K before 2027?</span>
                 </div>
               </div>
 
@@ -846,11 +1000,11 @@
                   Price Calls
                 </h2>
                 <p class="text-[16px] text-zinc-600 leading-relaxed mb-4 pl-11">
-                  A specific, falsifiable price prediction from a single KOL. The simplest category to resolve — the outcome is a number crossing a threshold by a deadline.
+                  One KOL, one number, one deadline. The cleanest category to settle: the price either crosses the threshold in time or it does not, and the data source decides &mdash; no room for interpretation.
                 </p>
                 <div class="ml-11 bg-zinc-50 border border-zinc-200 rounded-xl p-4 inline-block shadow-sm">
                   <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest block mb-1.5">Example Market</span>
-                  <span class="font-mono text-[14px] text-[#18181b] font-medium">ZEC > $1,000? / BTC > $150K?</span>
+                  <span class="font-mono text-[14px] text-[#18181b] font-medium">ZEC &gt; $1,000? &middot; BTC &gt; $150K?</span>
                 </div>
               </div>
 
@@ -863,11 +1017,11 @@
                   Market Structure
                 </h2>
                 <p class="text-[16px] text-zinc-600 leading-relaxed mb-4 pl-11">
-                  Macro or structural takes on the crypto market itself, not a single asset's price. These require a clearer resolution window since "outperform" needs a defined timeframe.
+                  A macro or structural take on the market itself rather than a single asset&rsquo;s price. These need a tighter resolution window, because &ldquo;outperform&rdquo; means nothing without a timeframe attached to it.
                 </p>
                 <div class="ml-11 bg-zinc-50 border border-zinc-200 rounded-xl p-4 inline-block shadow-sm">
                   <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest block mb-1.5">Example Market</span>
-                  <span class="font-mono text-[14px] text-[#18181b] font-medium">Will ETH outperform BTC (over the next 30 days)?</span>
+                  <span class="font-mono text-[14px] text-[#18181b] font-medium">Will ETH outperform BTC over the next 30 days?</span>
                 </div>
               </div>
 
@@ -877,10 +1031,10 @@
                   <span class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 shrink-0">
                     <i data-lucide="smile" class="w-4 h-4"></i>
                   </span>
-                  Meme & Culture
+                  Meme &amp; Culture
                 </h2>
                 <p class="text-[16px] text-zinc-600 leading-relaxed mb-4 pl-11">
-                  CT drama, callouts, and social dynamics — the category that's unique to CONVICTION and doesn't exist on Polymarket or Kalshi. This is what makes the product feel "social" rather than "financial."
+                  CT drama, callouts and social dynamics. This is the category that makes CONVICTION feel social instead of financial: the takes nobody would ever list as a market, priced like everything else.
                 </p>
                 <div class="ml-11 bg-zinc-50 border border-zinc-200 rounded-xl p-4 inline-block shadow-sm">
                   <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest block mb-1.5">Example Market</span>
@@ -894,10 +1048,10 @@
                   <span class="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 shrink-0">
                     <i data-lucide="cpu" class="w-4 h-4"></i>
                   </span>
-                  AI & Meta
+                  AI &amp; Meta
                 </h2>
                 <p class="text-[16px] text-zinc-600 leading-relaxed mb-4 pl-11">
-                  Longer-horizon, speculative calls about the future of AI/crypto convergence. Lower liquidity, higher engagement — good for retention since these markets stay open and talked-about for longer.
+                  Long-horizon calls on where AI and crypto are heading. Lower liquidity, higher engagement: these markets stay open and stay argued about for months, which makes them a retention play rather than a volume one.
                 </p>
                 <div class="ml-11 bg-zinc-50 border border-zinc-200 rounded-xl p-4 inline-block shadow-sm">
                   <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-widest block mb-1.5">Example Market</span>
@@ -907,50 +1061,62 @@
             </div>
 
             <!-- GRAPHIC 2: Resolution Window Comparison -->
-            <h2 class="text-[24px] font-bold text-[#18181b] mb-6">Resolution Window Overview</h2>
-            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 mb-16 relative shadow-inner overflow-x-auto">
-              <div class="min-w-[650px] relative">
-                <div class="flex justify-between items-center relative z-10">
-                  <!-- Connecting Line -->
-                  <div class="absolute top-[22px] left-10 right-10 h-1.5 bg-gradient-to-r from-green-400 via-blue-400 to-teal-400 rounded-full -z-10 opacity-70"></div>
-                  
-                  <!-- Nodes -->
-                  <div class="flex flex-col items-center w-28 group">
-                    <div class="w-12 h-12 rounded-full bg-white border-[3px] border-green-400 flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform">
-                       <i data-lucide="trending-up" class="w-5 h-5 text-green-500"></i>
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-3">Resolution Window Overview</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-6">
+              Typical time from market open to settlement, fastest first. The exact lock and resolution times are set before trading opens and are always visible on the market.
+            </p>
+            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-10 mb-16 shadow-inner overflow-x-auto max-w-4xl">
+              <div class="min-w-[600px] relative">
+                <!-- Axis: runs through the centre of every node circle -->
+                <div class="absolute left-14 right-14 top-[22px] h-px bg-gradient-to-r from-zinc-300 to-[#18181b]" aria-hidden="true"></div>
+
+                <!-- Nodes -->
+                <div class="relative flex justify-between items-start">
+                  <div class="flex flex-col items-center w-28 text-center">
+                    <div class="w-11 h-11 rounded-full bg-white border-2 border-purple-400 flex items-center justify-center shadow-sm mb-3">
+                      <i data-lucide="smile" class="w-4 h-4 text-purple-500"></i>
                     </div>
-                    <span class="text-[13px] font-bold text-[#18181b] text-center mb-1">Price Calls</span>
-                    <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded uppercase font-bold tracking-wider">Fastest</span>
+                    <span class="text-[13px] font-bold text-[#18181b] leading-tight mb-1">Meme &amp; Culture</span>
+                    <span class="text-[11px] font-mono text-zinc-400">24h &ndash; 7d</span>
                   </div>
 
-                  <div class="flex flex-col items-center w-28 group">
-                    <div class="w-12 h-12 rounded-full bg-white border-[3px] border-orange-400 flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform">
-                       <i data-lucide="swords" class="w-5 h-5 text-orange-500"></i>
+                  <div class="flex flex-col items-center w-28 text-center">
+                    <div class="w-11 h-11 rounded-full bg-white border-2 border-orange-400 flex items-center justify-center shadow-sm mb-3">
+                      <i data-lucide="swords" class="w-4 h-4 text-orange-500"></i>
                     </div>
-                    <span class="text-[13px] font-bold text-[#18181b] text-center mb-1">KOL Battles</span>
+                    <span class="text-[13px] font-bold text-[#18181b] leading-tight mb-1">KOL Battles</span>
+                    <span class="text-[11px] font-mono text-zinc-400">1&ndash;4 weeks</span>
                   </div>
 
-                  <div class="flex flex-col items-center w-32 group">
-                    <div class="w-12 h-12 rounded-full bg-white border-[3px] border-blue-400 flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform">
-                       <i data-lucide="pie-chart" class="w-5 h-5 text-blue-500"></i>
+                  <div class="flex flex-col items-center w-28 text-center">
+                    <div class="w-11 h-11 rounded-full bg-white border-2 border-blue-400 flex items-center justify-center shadow-sm mb-3">
+                      <i data-lucide="pie-chart" class="w-4 h-4 text-blue-500"></i>
                     </div>
-                    <span class="text-[13px] font-bold text-[#18181b] text-center mb-1">Market Structure</span>
+                    <span class="text-[13px] font-bold text-[#18181b] leading-tight mb-1">Market Structure</span>
+                    <span class="text-[11px] font-mono text-zinc-400">~30 days</span>
                   </div>
 
-                  <div class="flex flex-col items-center w-32 group">
-                    <div class="w-12 h-12 rounded-full bg-white border-[3px] border-purple-400 flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform">
-                       <i data-lucide="smile" class="w-5 h-5 text-purple-500"></i>
+                  <div class="flex flex-col items-center w-28 text-center">
+                    <div class="w-11 h-11 rounded-full bg-white border-2 border-green-400 flex items-center justify-center shadow-sm mb-3">
+                      <i data-lucide="trending-up" class="w-4 h-4 text-green-500"></i>
                     </div>
-                    <span class="text-[13px] font-bold text-[#18181b] text-center mb-1">Meme & Culture</span>
+                    <span class="text-[13px] font-bold text-[#18181b] leading-tight mb-1">Price Calls</span>
+                    <span class="text-[11px] font-mono text-zinc-400">1&ndash;6 months</span>
                   </div>
 
-                  <div class="flex flex-col items-center w-28 group">
-                    <div class="w-12 h-12 rounded-full bg-white border-[3px] border-teal-400 flex items-center justify-center shadow-sm mb-3 group-hover:scale-110 transition-transform">
-                       <i data-lucide="cpu" class="w-5 h-5 text-teal-600"></i>
+                  <div class="flex flex-col items-center w-28 text-center">
+                    <div class="w-11 h-11 rounded-full bg-white border-2 border-teal-400 flex items-center justify-center shadow-sm mb-3">
+                      <i data-lucide="cpu" class="w-4 h-4 text-teal-600"></i>
                     </div>
-                    <span class="text-[13px] font-bold text-[#18181b] text-center mb-1">AI & Meta</span>
-                    <span class="text-[10px] bg-zinc-200 text-zinc-600 px-2 py-0.5 rounded uppercase font-bold tracking-wider">Slowest</span>
+                    <span class="text-[13px] font-bold text-[#18181b] leading-tight mb-1">AI &amp; Meta</span>
+                    <span class="text-[11px] font-mono text-zinc-400">6 months+</span>
                   </div>
+                </div>
+
+                <!-- Axis labels -->
+                <div class="flex justify-between mt-8 pt-4 border-t border-zinc-200 text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">
+                  <span>24 hours</span>
+                  <span>6 months+</span>
                 </div>
               </div>
             </div>
@@ -959,7 +1125,7 @@
             <div class="mb-10">
               <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Where markets come from</h2>
               <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-4">
-                Markets are created two ways: curated (a Curator finds and posts a KOL tweet) and user-generated (any user with PROVE IT. access, level 10+, per the roadmap).
+                Markets come from two places. Curators &mdash; people who live on CT &mdash; hunt down the tweets worth trading and post them. And from Level 10, any user can turn a tweet into a market themselves with <strong class="text-black font-medium">PROVE IT.</strong>
               </p>
               <a href="#user-generated-markets" class="inline-flex items-center text-[15px] font-bold text-[#1D9BF0] hover:underline">
                 Learn more about User-Generated Markets (PROVE IT.) <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -967,58 +1133,69 @@
             </div>
 
             <!-- GRAPHIC 3: Creation Flow -->
-            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 flex flex-col items-center shadow-inner relative max-w-3xl mb-16">
-              
-              <!-- Top Node -->
-              <div class="bg-white border-2 border-[#1DA1F2]/30 rounded-2xl px-6 py-4 shadow-sm text-center mb-10 relative z-10 w-56 group hover:border-[#1DA1F2] transition-colors">
-                <i data-lucide="twitter" class="w-6 h-6 text-[#1DA1F2] fill-current mx-auto mb-2"></i>
-                <span class="text-[17px] font-extrabold text-[#18181b]">Tweet Spotted</span>
-              </div>
+            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-12 shadow-inner max-w-3xl mb-16">
+              <div class="w-full max-w-md mx-auto">
 
-              <!-- Connecting SVG Top -->
-              <div class="absolute top-[100px] w-full h-[60px] flex justify-center z-0">
-                <svg class="w-[300px] sm:w-[400px] h-full text-zinc-300" viewBox="0 0 400 60" fill="none" preserveAspectRatio="none">
-                  <path d="M200 0 V30 Q200 45 50 45 H0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                  <path d="M200 0 V30 Q200 45 350 45 H400" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                  <polygon points="5,41 0,45 5,49" fill="currentColor"/>
-                  <polygon points="395,41 400,45 395,49" fill="currentColor"/>
-                </svg>
-              </div>
+                <!-- Top node -->
+                <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-4 shadow-sm text-center">
+                  <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-2">The Call</div>
+                  <span class="text-[15px] font-bold text-[#18181b]">A tweet worth arguing about</span>
+                </div>
 
-              <!-- Split Paths -->
-              <div class="flex justify-between w-full max-w-[340px] sm:max-w-[440px] relative z-10 mb-10">
-                <div class="bg-white border border-zinc-200 rounded-2xl p-5 w-[150px] sm:w-[180px] text-center shadow-sm">
-                  <div class="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center mx-auto mb-3">
-                    <i data-lucide="user-check" class="w-5 h-5 text-zinc-600"></i>
+                <!-- Split connector -->
+                <div class="relative grid grid-cols-2 gap-4 h-10" aria-hidden="true">
+                  <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                  <div class="relative">
+                    <div class="absolute left-1/2 -right-2 top-1/2 h-px bg-zinc-300"></div>
+                    <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
                   </div>
-                  <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Curator</h4>
-                  <p class="text-[13px] text-zinc-500">Finds and posts it</p>
-                </div>
-
-                <div class="bg-[#FAFAFA] border-2 border-blue-100 rounded-2xl p-5 w-[150px] sm:w-[180px] text-center shadow-sm hover:border-blue-300 transition-colors">
-                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-3">
-                    <i data-lucide="zap" class="w-5 h-5 text-blue-600"></i>
+                  <div class="relative">
+                    <div class="absolute -left-2 right-1/2 top-1/2 h-px bg-zinc-300"></div>
+                    <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
                   </div>
-                  <h4 class="text-[15px] font-bold text-blue-700 mb-1">User (Lvl 10+)</h4>
-                  <p class="text-[13px] text-zinc-500">Submits via PROVE IT.</p>
                 </div>
-              </div>
 
-              <!-- Connecting SVG Bottom -->
-              <div class="absolute bottom-[90px] w-full h-[60px] flex justify-center z-0">
-                <svg class="w-[300px] sm:w-[400px] h-full text-zinc-300" viewBox="0 0 400 60" fill="none" preserveAspectRatio="none">
-                  <path d="M0 0 H50 Q200 0 200 30 V60" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                  <path d="M400 0 H350 Q200 0 200 30 V60" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-                  <polygon points="196,54 204,54 200,60" fill="currentColor"/>
-                </svg>
-              </div>
+                <!-- The two sources -->
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm text-center">
+                    <span class="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-600 flex items-center justify-center mx-auto mb-3">
+                      <i data-lucide="user-check" class="w-4 h-4"></i>
+                    </span>
+                    <h4 class="text-[14px] font-bold text-[#18181b] mb-1">Curator</h4>
+                    <p class="text-[12px] text-zinc-500 leading-snug">Finds it and posts it</p>
+                  </div>
 
-              <!-- Bottom Node -->
-              <div class="bg-[#18181b] rounded-2xl px-6 py-4 shadow-xl text-center text-white relative z-10 w-64 border border-zinc-700">
-                <div class="flex items-center justify-center gap-2.5">
-                  <div class="w-2.5 h-2.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.8)] animate-pulse"></div>
-                  <span class="text-[17px] font-extrabold tracking-wide">Market Goes Live</span>
+                  <div class="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm text-center">
+                    <span class="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-600 flex items-center justify-center mx-auto mb-3">
+                      <i data-lucide="zap" class="w-4 h-4"></i>
+                    </span>
+                    <h4 class="text-[14px] font-bold text-[#18181b] mb-1">Any user, Lvl 10+</h4>
+                    <p class="text-[12px] text-zinc-500 leading-snug">Submits via PROVE IT.</p>
+                  </div>
                 </div>
+
+                <!-- Converging connector -->
+                <div class="relative grid grid-cols-2 gap-4 h-10" aria-hidden="true">
+                  <div class="relative">
+                    <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                    <div class="absolute left-1/2 -right-2 top-1/2 h-px bg-zinc-300"></div>
+                  </div>
+                  <div class="relative">
+                    <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                    <div class="absolute -left-2 right-1/2 top-1/2 h-px bg-zinc-300"></div>
+                  </div>
+                  <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
+                </div>
+
+                <!-- Bottom node -->
+                <div class="bg-[#18181b] rounded-2xl px-5 py-4 text-center text-white shadow-md">
+                  <div class="flex items-center justify-center gap-2.5">
+                    <span class="w-2 h-2 rounded-full bg-[#22C55E]"></span>
+                    <span class="text-[15px] font-bold tracking-wide">Market goes live</span>
+                  </div>
+                  <p class="text-[11px] font-mono text-zinc-500 mt-2">Resolution criteria and deadline locked in</p>
+                </div>
+
               </div>
             </div>
 
@@ -1049,6 +1226,150 @@
             </div>
           </article>
 
+
+          <article id="page-reputation" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Product</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Conviction Score</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Conviction Score</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Your reputation is your portfolio. Every trade you make moves one public number between <strong class="text-black font-medium">0 and 100</strong> that sits next to your handle everywhere on CONVICTION.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-10">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                CT has always had reputation, it just had no units. Everyone remembers who called the top and nobody can prove it. The Conviction Score is the scoreboard that was missing: it goes up when you are right, down when you are wrong, and it is visible to everyone before they decide whether to follow your side of a market.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                It is not a follower count and it cannot be bought. Volume alone will not carry you and neither will one lucky call. Markets reward clarity, not noise.
+              </p>
+            </div>
+
+            <!-- GRAPHIC 1: The score dial -->
+            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-10 shadow-inner max-w-3xl mb-14">
+              <div class="flex flex-col sm:flex-row items-center gap-8 sm:gap-10">
+
+                <div class="relative w-36 h-36 shrink-0">
+                  <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                    <path class="text-zinc-200" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="2.5"></path>
+                    <path class="text-[#18181b]" stroke-dasharray="78, 100" stroke-linecap="round" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="2.5"></path>
+                  </svg>
+                  <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <span class="font-mono text-[38px] font-bold text-[#18181b] leading-none">78</span>
+                    <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mt-1.5">Score</span>
+                  </div>
+                </div>
+
+                <div class="flex-1 w-full">
+                  <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-4">What moves it</div>
+                  <div class="space-y-3">
+                    <div class="bg-white border border-zinc-200 rounded-xl px-4 py-3 shadow-sm">
+                      <div class="text-[13px] font-bold text-[#18181b] mb-0.5">Win rate</div>
+                      <div class="text-[13px] text-zinc-500 leading-snug">How often your side of the market is the one that settles at $1.00.</div>
+                    </div>
+                    <div class="bg-white border border-zinc-200 rounded-xl px-4 py-3 shadow-sm">
+                      <div class="text-[13px] font-bold text-[#18181b] mb-0.5">Volume</div>
+                      <div class="text-[13px] text-zinc-500 leading-snug">How much you actually put behind the call. Conviction has to cost something.</div>
+                    </div>
+                    <div class="bg-white border border-zinc-200 rounded-xl px-4 py-3 shadow-sm">
+                      <div class="text-[13px] font-bold text-[#18181b] mb-0.5">Consistency</div>
+                      <div class="text-[13px] text-zinc-500 leading-snug">Being right repeatedly, over time. One lucky call is not a track record.</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Milestones -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Score milestones</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Three points on the scale mint a permanent reputation badge on your profile. They are hard on purpose &mdash; a badge nobody struggles for is a badge nobody respects.
+            </p>
+
+            <!-- GRAPHIC 2: 0-100 scale -->
+            <div class="border border-zinc-200 rounded-2xl bg-white shadow-sm p-6 sm:p-8 max-w-3xl mb-14">
+              <div class="relative pt-8 pb-2">
+                <!-- markers -->
+                <div class="absolute top-0 left-[50%] -translate-x-1/2 text-center">
+                  <span class="text-[11px] font-mono font-bold text-[#18181b]">50</span>
+                </div>
+                <div class="absolute top-0 left-[75%] -translate-x-1/2 text-center">
+                  <span class="text-[11px] font-mono font-bold text-[#18181b]">75</span>
+                </div>
+                <div class="absolute top-0 left-[90%] -translate-x-1/2 text-center">
+                  <span class="text-[11px] font-mono font-bold text-[#18181b]">90</span>
+                </div>
+
+                <!-- track -->
+                <div class="relative h-2 rounded-full bg-gradient-to-r from-zinc-200 to-[#18181b]">
+                  <span class="absolute top-1/2 left-[50%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-[#18181b]"></span>
+                  <span class="absolute top-1/2 left-[75%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-[#18181b]"></span>
+                  <span class="absolute top-1/2 left-[90%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-[#18181b]"></span>
+                </div>
+
+                <div class="flex justify-between mt-2.5 text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">
+                  <span>0</span>
+                  <span>100</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-6 border-t border-zinc-100">
+                <div>
+                  <div class="font-mono text-[15px] font-bold text-[#18181b] mb-1">50</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">You are a net-positive trader. The badge says you are worth reading.</div>
+                </div>
+                <div>
+                  <div class="font-mono text-[15px] font-bold text-[#18181b] mb-1">75</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">A real track record. This is the range copy-traders look for.</div>
+                </div>
+                <div>
+                  <div class="font-mono text-[15px] font-bold text-[#18181b] mb-1">90</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">Top of the board. Rare, public, and very hard to hold on to.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Score vs Level -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Score is not Level</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              They are two different numbers and people mix them up. Your <strong class="text-black font-medium">Level</strong> says how much you have played. Your <strong class="text-black font-medium">Conviction Score</strong> says how well.
+            </p>
+
+            <!-- GRAPHIC 3: Level vs Score -->
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white overflow-hidden shadow-sm mb-14">
+              <div class="grid grid-cols-2 bg-zinc-50 border-b border-zinc-200 text-[11px] font-bold uppercase tracking-wider">
+                <div class="px-4 sm:px-5 py-2.5 text-zinc-500">Level &middot; 1&ndash;50</div>
+                <div class="px-4 sm:px-5 py-2.5 border-l border-zinc-200 text-[#18181b]">Conviction Score &middot; 0&ndash;100</div>
+              </div>
+              <div class="divide-y divide-zinc-100">
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Earned by activity</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Earned by accuracy</div>
+                </div>
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Only goes up</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Goes up and down</div>
+                </div>
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Unlocks perks and fee discounts</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Decides whether anyone copies you</div>
+                </div>
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Rewards the grind</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Rewards the call</div>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-10">
+              You can grind to Level 50 with a score of 40. You can sit at Level 12 with a score of 88. The second profile is the one the timeline follows &mdash; conviction is the new currency.
+            </p>
+          </article>
           <article id="page-level-system" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
               <span>Product</span>
@@ -1476,35 +1797,230 @@
             </div>
           </article>
 
+
+          <article id="page-user-generated-markets" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Product</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">User-Generated Markets</span>
+            </div>
+
+            <div class="flex items-center gap-3 mb-6 flex-wrap">
+              <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight">PROVE IT.</h1>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-md">Unlocks at Level 10</span>
+            </div>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Back it. Fade it. <strong class="text-black font-medium">Prove it.</strong> From Level 10 you stop waiting for a market to exist &mdash; you turn the tweet into one yourself.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Curators can only cover so much of the timeline. The best takes are often the ones nobody at the platform saw: a reply-guy call, a niche thread, a screenshot doing the rounds in a group chat. PROVE IT. hands market creation to the people who were already there when it was posted.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                It is also the sharpest way to call someone out. If you think a take is nonsense, you no longer have to argue about it &mdash; you list it, and let the timeline price it.
+              </p>
+            </div>
+
+            <!-- How it works -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Turning a tweet into a market</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              A market is only tradeable if it can be settled without an argument. That is the whole job of the form: turn a take into a claim with a source and a deadline attached.
+            </p>
+
+            <!-- GRAPHIC 1: Submission form -->
+            <div class="max-w-2xl rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden mb-14">
+              <div class="px-5 sm:px-6 py-4 border-b border-zinc-200 flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">New market</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">Draft</span>
+              </div>
+
+              <div class="divide-y divide-zinc-100">
+                <div class="px-5 sm:px-6 py-4">
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Source tweet</div>
+                  <div class="rounded-xl border border-zinc-200 bg-[#FAFAFA] p-3">
+                    <div class="flex items-center gap-2 mb-2">
+                      <img src="https://i.imgur.com/DCnGrB1.png" alt="" class="w-5 h-5 rounded-full object-cover bg-zinc-200" />
+                      <span class="text-[11px] font-bold text-[#18181b]">Ansem</span>
+                      <span class="text-[11px] text-zinc-400">@blknoiz06</span>
+                    </div>
+                    <p class="text-[13px] font-medium text-[#18181b] leading-snug">&ldquo;ETH &gt; $8K before 2027&rdquo;</p>
+                  </div>
+                </div>
+
+                <div class="px-5 sm:px-6 py-4">
+                  <div class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">The question</div>
+                  <p class="text-[14px] font-medium text-[#18181b]">Will ETH trade above $8,000 before January 1, 2027?</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-zinc-100">
+                  <div class="px-5 sm:px-6 py-4">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Resolves from</div>
+                    <p class="font-mono text-[13px] text-[#18181b]">Coingecko &middot; daily close</p>
+                  </div>
+                  <div class="px-5 sm:px-6 py-4">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Deadline</div>
+                    <p class="font-mono text-[13px] text-[#18181b]">Jan 1, 2027 &middot; 00:00 UTC</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-5 sm:px-6 py-4 bg-[#FAFAFA] border-t border-zinc-200 flex items-center justify-between gap-4">
+                <span class="text-[12px] text-zinc-500">Submitted for review &rarr; goes live</span>
+                <span class="font-mono text-[12px] font-bold text-[#18181b]">+25 XP</span>
+              </div>
+            </div>
+
+            <!-- Rules -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">What a market needs to pass</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Every submission is checked against the same bar the curated markets are held to. Get these four right and it goes live.
+            </p>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-14">
+              <ul class="divide-y divide-zinc-100">
+                <li class="flex gap-4 px-5 py-4">
+                  <i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">A falsifiable claim</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">There is no &ldquo;maybe&rdquo;. The outcome has to land on one side or the other.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">A verifiable source</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Coingecko for prices, an official announcement for events. No room for interpretation.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">An explicit deadline</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Lock and resolution times are set before trading opens and never move.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">The original wording</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">We keep the receipts. The tweet is captured at creation, so deleting it later changes nothing.</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Limits -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Access and limits</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mb-10">
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <div class="font-mono text-[26px] font-bold text-[#18181b] leading-none mb-2">10</div>
+                <div class="text-[13px] font-medium text-black mb-0.5">Minimum level</div>
+                <div class="text-[13px] text-zinc-500 leading-snug">PROVE IT. unlocks with the Bronze tier badge.</div>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <div class="font-mono text-[26px] font-bold text-[#18181b] leading-none mb-2">5&times;</div>
+                <div class="text-[13px] font-medium text-black mb-0.5">Markets per day</div>
+                <div class="text-[13px] text-zinc-500 leading-snug">Enough to cover the timeline, not enough to spam it.</div>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <div class="font-mono text-[26px] font-bold text-[#18181b] leading-none mb-2">+25</div>
+                <div class="text-[13px] font-medium text-black mb-0.5">XP per market</div>
+                <div class="text-[13px] text-zinc-500 leading-snug">Creating markets is one of the fastest ways to climb.</div>
+              </div>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="git-branch" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Where this sits on the roadmap</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  PROVE IT. ships in <strong class="text-black font-medium">V1.5</strong>, alongside copy-trading and the portfolio dashboard. In <strong class="text-black font-medium">V2.0</strong> market creation opens up entirely.
+                </p>
+              </div>
+            </div>
+          </article>
           <article id="page-user-incentives" class="doc-page hidden">
             <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
               <span>Incentives & Rewards</span>
               <i data-lucide="chevron-right" class="w-4 h-4"></i>
               <span class="text-[#18181b]">User Incentives</span>
             </div>
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-8">Launch Incentives</h1>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              
-              <div class="p-8 bg-[#18181b] text-white rounded-3xl relative overflow-hidden shadow-xl">
-                <div class="absolute -right-4 -top-4 opacity-10">
-                  <i data-lucide="coins" class="w-40 h-40"></i>
-                </div>
-                <h3 class="text-[22px] font-bold mb-3 relative z-10">Deposit $100, Get $100</h3>
-                <p class="text-[16px] text-zinc-400 leading-relaxed relative z-10">
-                  Welcome bonus for new accounts. Non-withdrawable bonus funds to kickstart your trading journey.
-                </p>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Launch Incentives</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-12 max-w-3xl">
+              Getting a first trade out of someone is the whole battle. The launch stack is built to remove every excuse: double the balance, no fees, and a free swing at the first call.
+            </p>
+
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Deposit $100, Get $100</h2>
+
+            <div class="space-y-4 max-w-3xl mb-8">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Fund your account with $100 and we match it. You start with <strong class="text-black font-medium">$200 of buying power</strong> on day one, which is enough to take a real position on four or five markets instead of nervously sizing one.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                The matched half is a <strong class="text-black font-medium">non-withdrawable bonus</strong>: it is trading capital, not cash out. It buys shares exactly like your own money does, and it settles exactly like your own money does.
+              </p>
+            </div>
+
+            <!-- GRAPHIC: Buying power breakdown -->
+            <div class="max-w-md rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden mb-8">
+              <div class="px-5 sm:px-6 py-3 border-b border-zinc-200 bg-zinc-50">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Welcome bonus</span>
               </div>
 
-              <div class="p-8 bg-white border border-zinc-200 rounded-3xl shadow-sm">
-                <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center mb-5">
-                  <i data-lucide="shield-check" class="w-6 h-6 text-[#18181b]"></i>
+              <div class="px-5 sm:px-6 py-5">
+                <div class="space-y-2.5 text-[14px] mb-5">
+                  <div class="flex justify-between">
+                    <span class="text-zinc-500">You deposit</span>
+                    <span class="font-mono text-[#18181b]">$100.00</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-zinc-500">Bonus credited</span>
+                    <span class="font-mono text-[#18181b]">+$100.00</span>
+                  </div>
+                  <div class="flex justify-between border-t border-zinc-200 pt-2.5">
+                    <span class="font-medium text-black">Buying power</span>
+                    <span class="font-mono text-[18px] font-bold text-[#18181b] leading-none">$200.00</span>
+                  </div>
+                </div>
+
+                <div class="w-full h-2 rounded-full overflow-hidden flex mb-2">
+                  <div class="h-full bg-[#18181b]" style="width: 50%"></div>
+                  <div class="h-full bg-zinc-300" style="width: 50%"></div>
+                </div>
+                <div class="flex justify-between text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                  <span>Yours</span>
+                  <span>Bonus</span>
+                </div>
+              </div>
+
+              <div class="px-5 sm:px-6 py-3.5 border-t border-zinc-200 bg-[#FAFAFA]">
+                <p class="text-[12px] text-zinc-500 leading-relaxed">The bonus half is non-withdrawable &mdash; it exists to be traded, not banked.</p>
+              </div>
+            </div>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-14">
+              It stacks with everything else here. Your first trade out of that $200 is covered by <a href="#first-loss-protected" class="font-bold text-[#1D9BF0] hover:underline">First Loss Protected</a>, and during the launch window you pay no fees on any of it.
+            </p>
+
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-6">The rest of the stack</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+              <a href="#first-loss-protected" class="group p-8 bg-white border border-zinc-200 rounded-3xl shadow-sm hover:border-[#18181b] transition-colors">
+                <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center mb-5 text-[#18181b] group-hover:bg-[#18181b] group-hover:text-white transition-colors">
+                  <i data-lucide="shield-check" class="w-6 h-6"></i>
                 </div>
                 <h3 class="text-[22px] font-bold text-[#18181b] mb-3">First Loss Protected</h3>
                 <p class="text-[16px] text-zinc-600 leading-relaxed">
                   Faded the wrong call? Up to $100 back if your very first trade on the platform loses.
                 </p>
-              </div>
+                <span class="inline-flex items-center gap-1.5 text-[14px] font-bold text-[#18181b] mt-4">
+                  Read more <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </span>
+              </a>
 
               <div class="p-8 bg-white border border-zinc-200 rounded-3xl shadow-sm">
                 <div class="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center mb-5">
@@ -1533,6 +2049,112 @@
               <div>
                 <h4 class="text-[16px] font-bold text-[#18181b]">Milestone Rewards</h4>
                 <p class="text-[15px] text-zinc-600 mt-1">Complete your first 5 trades to unlock a $25 bonus.</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-first-loss-protected" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Incentives &amp; Rewards</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">First Loss Protected</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">First Loss Protected</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Your first trade on CONVICTION cannot really go wrong. If the call misses, you get the stake back &mdash; up to <strong class="text-black font-medium">$100</strong>.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                The hardest trade anyone makes is the first one. Not because it is complicated &mdash; you pick BACK or FADE and the order fills &mdash; but because putting real money behind a take for the first time feels different from posting one.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                So we take that first one off the table. Trade the take you actually believe in, at a size you actually mean, and find out what it feels like to be on the hook. If you were right, you keep the profit like any other trade. If you were wrong, the stake comes back and the only thing you really lost is the argument.
+              </p>
+            </div>
+
+            <!-- GRAPHIC 1: The two outcomes -->
+            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-10 shadow-inner max-w-3xl mb-14">
+              <div class="w-full max-w-md mx-auto">
+
+                <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-4 shadow-sm text-center">
+                  <div class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-2">Your first trade</div>
+                  <span class="text-[15px] font-bold text-[#18181b]">$50 on BACK at 70&cent;</span>
+                </div>
+
+                <!-- Split connector -->
+                <div class="relative grid grid-cols-2 gap-4 h-10" aria-hidden="true">
+                  <div class="absolute left-1/2 top-0 h-1/2 w-px bg-zinc-300"></div>
+                  <div class="relative">
+                    <div class="absolute left-1/2 -right-2 top-1/2 h-px bg-zinc-300"></div>
+                    <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
+                  </div>
+                  <div class="relative">
+                    <div class="absolute -left-2 right-1/2 top-1/2 h-px bg-zinc-300"></div>
+                    <div class="absolute left-1/2 top-1/2 bottom-0 w-px bg-zinc-300"></div>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+                    <div class="flex items-center gap-2 mb-3">
+                      <span class="w-7 h-7 rounded-lg bg-[#DCFCE7] text-[#166534] flex items-center justify-center shrink-0">
+                        <i data-lucide="crown" class="w-4 h-4"></i>
+                      </span>
+                      <span class="text-[12px] font-bold uppercase tracking-wider text-[#166534]">It lands</span>
+                    </div>
+                    <div class="font-mono text-[20px] font-bold text-[#166534] leading-none mb-2">+$21.43</div>
+                    <p class="text-[12px] text-zinc-500 leading-snug">Paid out like any other trade. The receipt is yours.</p>
+                  </div>
+
+                  <div class="bg-white border border-zinc-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+                    <div class="flex items-center gap-2 mb-3">
+                      <span class="w-7 h-7 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center shrink-0">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                      </span>
+                      <span class="text-[12px] font-bold uppercase tracking-wider text-[#18181b]">It misses</span>
+                    </div>
+                    <div class="font-mono text-[20px] font-bold text-[#18181b] leading-none mb-2">$0.00</div>
+                    <p class="text-[12px] text-zinc-500 leading-snug">The $50 stake is credited back. Protection covers up to $100.</p>
+                  </div>
+                </div>
+
+                <p class="text-[11px] font-mono text-zinc-400 text-center mt-6">Applies once, to your first settled trade</p>
+              </div>
+            </div>
+
+            <!-- The rules -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">How it works</h2>
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <ul class="divide-y divide-zinc-100 text-[14px]">
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">01</span>
+                  <span class="text-zinc-600">It applies automatically to the <strong class="text-black font-medium">first trade that settles</strong> on your account. Nothing to claim and nothing to opt into.</span>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">02</span>
+                  <span class="text-zinc-600">If that trade loses, the stake is credited back to your balance, <strong class="text-black font-medium">up to $100</strong>. Stake more than that and the excess is a normal loss.</span>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">03</span>
+                  <span class="text-zinc-600">It fires once per account. From your second trade on, you are trading like everyone else.</span>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">04</span>
+                  <span class="text-zinc-600">The outcome still counts. Your <strong class="text-black font-medium">Conviction Score</strong> moves and the receipt is minted either way &mdash; the money is protected, the record is not.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="layers" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Stacks with the welcome bonus</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  Deposit $100 and you start with $200 of buying power. Your first trade out of that is protected, and during the launch window there are no fees on top. See <a href="#user-incentives" class="font-bold text-[#1D9BF0] hover:underline">Deposit $100, Get $100</a>.
+                </p>
               </div>
             </div>
           </article>
@@ -1637,6 +2259,1121 @@
           </article>
 
           <!-- Fallback Coming Soon -->
+
+          <article id="page-refer-a-degen" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Incentives &amp; Rewards</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Refer a Degen</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Refer a Degen, Get $25</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Bring someone onto the timeline and you both get paid. <strong class="text-black font-medium">$25 each</strong>, once they actually show up and trade.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Nobody discovers CONVICTION from an ad. They discover it because someone they follow posted a receipt, or because a group chat is arguing about a market. The referral program just pays for the thing that was going to happen anyway.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                It is deliberately two-sided. A referral that only pays the referrer turns users into spammers; paying both sides makes the invite worth sending and worth accepting.
+              </p>
+            </div>
+
+            <!-- GRAPHIC: both sides get paid -->
+            <div class="max-w-2xl rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden mb-14">
+              <div class="px-5 sm:px-6 py-3 border-b border-zinc-200 bg-zinc-50">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Payout</span>
+              </div>
+              <div class="grid grid-cols-2 divide-x divide-zinc-200">
+                <div class="p-5 sm:p-6 text-center">
+                  <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                  </span>
+                  <div class="text-[12px] font-bold uppercase tracking-wider text-zinc-500 mb-2">You</div>
+                  <div class="font-mono text-[26px] font-bold text-[#18181b] leading-none">+$25</div>
+                </div>
+                <div class="p-5 sm:p-6 text-center">
+                  <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                  </span>
+                  <div class="text-[12px] font-bold uppercase tracking-wider text-zinc-500 mb-2">Your friend</div>
+                  <div class="font-mono text-[26px] font-bold text-[#18181b] leading-none">+$25</div>
+                </div>
+              </div>
+              <div class="px-5 sm:px-6 py-3.5 border-t border-zinc-200 bg-[#FAFAFA]">
+                <p class="text-[12px] text-zinc-500 leading-relaxed">Credited to both balances once the invited account makes its first deposit and its first trade.</p>
+              </div>
+            </div>
+
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">What has to happen</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              The reward is tied to a real user, not a signup. A referral only counts once the account has money in it and a position on the board.
+            </p>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <ul class="divide-y divide-zinc-100 text-[14px]">
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">01</span>
+                  <span class="text-zinc-600">You share your invite link. It is tied to your handle, so the referral is credited to you.</span>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">02</span>
+                  <span class="text-zinc-600">They sign up and make a <strong class="text-black font-medium">first deposit</strong>. The welcome bonus applies to them on top of this.</span>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">03</span>
+                  <span class="text-zinc-600">They place their <strong class="text-black font-medium">first trade</strong>. That trade is covered by First Loss Protected, so there is nothing scary about it.</span>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0">04</span>
+                  <span class="text-zinc-600">$25 lands in both balances. You also pick up <strong class="text-black font-medium">50 XP</strong> toward your next level.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="repeat" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Referrals are the second loop, not the first</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  The main growth engine is receipts &mdash; every outcome posted to X is free marketing with proof attached. Referrals catch the people that reach, then converts.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-zero-fees" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Incentives &amp; Rewards</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Zero Fees</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Zero Fees (Early)</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              During the launch window, trading on CONVICTION costs <strong class="text-black font-medium">0%</strong>. You win the market, you keep the whole thing.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                A fee on a small position is not a revenue problem, it is a psychological one. It turns a $10 trade into a calculation, and calculations kill impulse. At launch we would rather have the volume and the receipts than the rake.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                So there is nothing to model: your payout is exactly what the market says it is. Buy 100 shares at 70&cent; and being right returns $100.00, not $100.00 minus something.
+              </p>
+            </div>
+
+            <!-- GRAPHIC: what you keep -->
+            <div class="max-w-md rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden mb-14">
+              <div class="px-5 sm:px-6 py-3 border-b border-zinc-200 bg-zinc-50">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Winning position</span>
+              </div>
+              <div class="px-5 sm:px-6 py-5 space-y-2.5 text-[14px]">
+                <div class="flex justify-between"><span class="text-zinc-500">Market payout</span><span class="font-mono text-[#18181b]">$100.00</span></div>
+                <div class="flex justify-between"><span class="text-zinc-500">Trading fee</span><span class="font-mono text-[#166534]">&minus;$0.00</span></div>
+                <div class="flex justify-between border-t border-zinc-200 pt-2.5"><span class="font-medium text-black">You receive</span><span class="font-mono text-[18px] font-bold text-[#18181b] leading-none">$100.00</span></div>
+              </div>
+              <div class="px-5 sm:px-6 py-3.5 border-t border-zinc-200 bg-[#FAFAFA]">
+                <p class="text-[12px] text-zinc-500 leading-relaxed">100% of winnings, for every market, for the whole launch window.</p>
+              </div>
+            </div>
+
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">When fees do arrive</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Zero fees is a launch window, not a permanent state &mdash; and when it closes, the people who were here first pay the least. The Level System carries a fee discount that grows the whole way up the ladder.
+            </p>
+
+            <div class="max-w-2xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <table class="w-full text-left text-[14px]">
+                <thead class="text-[12px] text-zinc-500 uppercase tracking-wider bg-zinc-50 border-b border-zinc-200">
+                  <tr>
+                    <th class="px-5 py-3 font-bold">Level</th>
+                    <th class="px-5 py-3 font-bold">Fee discount</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 bg-white">
+                  <tr><td class="px-5 py-3 font-mono text-zinc-600">15</td><td class="px-5 py-3 text-zinc-600">1%</td></tr>
+                  <tr><td class="px-5 py-3 font-mono text-zinc-600">20</td><td class="px-5 py-3 text-zinc-600">2%</td></tr>
+                  <tr><td class="px-5 py-3 font-mono text-zinc-600">30</td><td class="px-5 py-3 text-zinc-600">3%</td></tr>
+                  <tr><td class="px-5 py-3 font-mono text-zinc-600">40</td><td class="px-5 py-3 text-zinc-600">5%</td></tr>
+                  <tr class="bg-[#18181b] text-white">
+                    <td class="px-5 py-3 font-mono">50</td>
+                    <td class="px-5 py-3 font-bold text-[#EAB308]">10%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-10">
+              Which means the grind you do during the free window is not wasted &mdash; it is exactly what determines your cost basis afterwards.
+            </p>
+          </article>
+
+          <article id="page-points-xp" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Incentives &amp; Rewards</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Points &amp; XP</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Points &amp; XP System</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              XP is the currency of the grind. It only buys one thing &mdash; levels &mdash; and levels buy badges, discounts and access.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Every action worth doing on CONVICTION pays XP: taking a side, being right, creating a market, posting a receipt, bringing someone in. What it does not pay for is noise, which is why almost everything carries a daily cap.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                The two uncapped actions are the honest ones. <strong class="text-black font-medium">Winning</strong> pays 50 XP with no limit, because you cannot farm being right. <strong class="text-black font-medium">Losing</strong> still pays 5, because a wrong call made in public is worth more to the platform than no call at all.
+              </p>
+            </div>
+
+            <!-- GRAPHIC: a maxed-out day -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">What a full day looks like</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              An example of an active day with every capped action maxed out. The caps mean there is a ceiling on grinding, and above that ceiling the only way up is to be right.
+            </p>
+
+            <div class="max-w-2xl rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden mb-14">
+              <div class="px-5 sm:px-6 py-3 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">One day, capped out</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">Example</span>
+              </div>
+              <div class="divide-y divide-zinc-100 text-[14px]">
+                <div class="flex items-center justify-between px-5 sm:px-6 py-3">
+                  <div><span class="text-zinc-600">10 trades placed</span><span class="text-[12px] font-mono text-zinc-400 ml-2">10 XP &times; 10</span></div>
+                  <span class="font-mono text-[#18181b]">100</span>
+                </div>
+                <div class="flex items-center justify-between px-5 sm:px-6 py-3">
+                  <div><span class="text-zinc-600">6 of them win</span><span class="text-[12px] font-mono text-zinc-400 ml-2">50 XP &times; 6</span></div>
+                  <span class="font-mono text-[#166534] font-bold">300</span>
+                </div>
+                <div class="flex items-center justify-between px-5 sm:px-6 py-3">
+                  <div><span class="text-zinc-600">4 of them lose</span><span class="text-[12px] font-mono text-zinc-400 ml-2">5 XP &times; 4</span></div>
+                  <span class="font-mono text-[#18181b]">20</span>
+                </div>
+                <div class="flex items-center justify-between px-5 sm:px-6 py-3">
+                  <div><span class="text-zinc-600">5 markets created</span><span class="text-[12px] font-mono text-zinc-400 ml-2">25 XP &times; 5</span></div>
+                  <span class="font-mono text-[#18181b]">125</span>
+                </div>
+                <div class="flex items-center justify-between px-5 sm:px-6 py-3">
+                  <div><span class="text-zinc-600">5 KOLs copied</span><span class="text-[12px] font-mono text-zinc-400 ml-2">15 XP &times; 5</span></div>
+                  <span class="font-mono text-[#18181b]">75</span>
+                </div>
+                <div class="flex items-center justify-between px-5 sm:px-6 py-3">
+                  <div><span class="text-zinc-600">3 receipts posted</span><span class="text-[12px] font-mono text-zinc-400 ml-2">10 XP &times; 3</span></div>
+                  <span class="font-mono text-[#18181b]">30</span>
+                </div>
+              </div>
+              <div class="px-5 sm:px-6 py-4 bg-[#18181b] text-white flex items-center justify-between">
+                <span class="text-[13px] font-bold uppercase tracking-wider">Day total</span>
+                <span class="font-mono text-[20px] font-bold text-[#EAB308] leading-none">650 XP</span>
+              </div>
+            </div>
+
+            <!-- Multiplier -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Volume multiplies everything</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Size is conviction. The more you have traded overall, the more every single action is worth &mdash; which is why two users with identical activity can be twenty levels apart.
+            </p>
+
+            <div class="max-w-2xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <div class="grid grid-cols-3 divide-x divide-zinc-200 text-center">
+                <div class="p-5">
+                  <div class="font-mono text-[24px] font-bold text-zinc-400 leading-none mb-2">1&times;</div>
+                  <div class="text-[12px] text-zinc-500 leading-snug">Under $1,000 traded</div>
+                </div>
+                <div class="p-5">
+                  <div class="font-mono text-[24px] font-bold text-[#18181b] leading-none mb-2">1.25&times;</div>
+                  <div class="text-[12px] text-zinc-500 leading-snug">Over $1,000 traded</div>
+                </div>
+                <div class="p-5 bg-[#FAFAFA]">
+                  <div class="font-mono text-[24px] font-bold text-[#18181b] leading-none mb-2">3&times;</div>
+                  <div class="text-[12px] text-zinc-500 leading-snug">Over $1M traded</div>
+                </div>
+              </div>
+              <div class="px-5 sm:px-6 py-3.5 border-t border-zinc-200 bg-zinc-50">
+                <p class="text-[12px] text-zinc-500 leading-relaxed">On top of that, every $1,000 of lifetime volume adds +1 XP to every action you take.</p>
+              </div>
+            </div>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-10">
+              XP is not the Conviction Score and never touches it. XP measures how much you played; the score measures how well. See <a href="#level-system" class="font-bold text-[#1D9BF0] hover:underline">the Level System</a> for the full earn table and the 1&ndash;50 ladder.
+            </p>
+          </article>
+
+          <article id="page-milestone-rewards" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Incentives &amp; Rewards</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Milestone Rewards</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Milestone Rewards</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Complete your first <strong class="text-black font-medium">5 trades</strong> and $25 lands in your balance. That is the whole mechanic.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                One trade tells you nothing. You do not know what it feels like to be right, you have not seen a market move against you and come back, and you have no receipt to post. Five trades is roughly where a new user stops being a visitor.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                So the milestone is deliberately placed there: not at signup, not at deposit, but at the point where the habit either forms or does not.
+              </p>
+            </div>
+
+            <!-- GRAPHIC: progress tracker -->
+            <div class="max-w-2xl rounded-2xl border border-zinc-200 bg-white shadow-sm overflow-hidden mb-14">
+              <div class="px-5 sm:px-6 py-3 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">First 5 trades</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">3 / 5</span>
+              </div>
+
+              <div class="px-5 sm:px-6 py-6">
+                <div class="flex items-center gap-2 mb-5">
+                  <span class="flex-1 h-9 rounded-lg bg-[#18181b] text-white font-mono text-[13px] font-bold flex items-center justify-center">1</span>
+                  <span class="flex-1 h-9 rounded-lg bg-[#18181b] text-white font-mono text-[13px] font-bold flex items-center justify-center">2</span>
+                  <span class="flex-1 h-9 rounded-lg bg-[#18181b] text-white font-mono text-[13px] font-bold flex items-center justify-center">3</span>
+                  <span class="flex-1 h-9 rounded-lg bg-zinc-100 text-zinc-400 font-mono text-[13px] font-bold flex items-center justify-center">4</span>
+                  <span class="flex-1 h-9 rounded-lg bg-zinc-100 text-zinc-400 font-mono text-[13px] font-bold flex items-center justify-center">5</span>
+                </div>
+                <div class="flex items-center justify-between text-[13px]">
+                  <span class="text-zinc-500">2 trades to go</span>
+                  <span class="font-mono font-bold text-[#18181b]">+$25.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- The onboarding chain -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">The first-week chain</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              The milestone is the last link in a deliberate sequence. Each one removes a different reason to stop.
+            </p>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <ul class="divide-y divide-zinc-100">
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">01</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">Deposit $100, get $100</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Removes &ldquo;I do not have enough to make this interesting.&rdquo;</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">02</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">First Loss Protected</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Removes &ldquo;what if I am wrong the very first time.&rdquo;</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">03</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">Zero fees</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Removes the mental maths on small positions.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4 bg-zinc-50">
+                  <span class="font-mono text-[13px] font-bold text-[#18181b] w-5 shrink-0 pt-0.5">04</span>
+                  <div>
+                    <div class="text-[14px] font-semibold text-black mb-0.5">5 trades &rarr; $25</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Pays for the repetition that turns a trial into a habit.</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-10">
+              Those five trades also do the quiet work: they seed your <a href="#reputation" class="font-bold text-[#1D9BF0] hover:underline">Conviction Score</a>, mint your first receipts and put roughly 150&ndash;300 XP on the board before you have thought about levels at all.
+            </p>
+          </article>
+
+          <article id="page-roadmap-v15" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Strategy</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Roadmap V1.5</span>
+            </div>
+
+            <div class="flex items-center gap-3 mb-6 flex-wrap">
+              <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight">V1.5</h1>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-md">Post-MVP</span>
+            </div>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              The MVP proves people will trade a tweet. V1.5 answers the next question: what makes them come back tomorrow?
+            </p>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-12">
+              Everything in this release is a retention mechanic. The MVP is a supply problem solved by curators and a demand problem solved by incentives &mdash; V1.5 hands supply to the users, gives newcomers a way to trade without an opinion of their own, and builds the two surfaces that pull people back into the app.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-4xl mb-10">
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="zap" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">User-generated markets</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed mb-3">
+                  PROVE IT. opens at Level 10. Market supply stops being capped by how many tweets the curator team can read in a day.
+                </p>
+                <a href="#user-generated-markets" class="inline-flex items-center gap-1.5 text-[14px] font-bold text-[#1D9BF0] hover:underline">
+                  How it works <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="copy" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">Copy-trade KOLs</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  One click to ride someone else&rsquo;s conviction. It gives a brand-new user a way to participate before they trust their own read, and it turns a high Conviction Score into something that pays its owner in attention.
+                </p>
+              </div>
+
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="bell" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">Push notifications</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  A market resolving is a moment, and moments are what bring people back. Your call landed, your position moved, the KOL you copied just took a side.
+                </p>
+              </div>
+
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">Portfolio dashboard</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  Open positions, settled history, score movement and level progress in one place. Your reputation is your portfolio &mdash; this is where you actually see it.
+                </p>
+              </div>
+            </div>
+
+            <div class="max-w-4xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="git-branch" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Next</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  <a href="#roadmap-v20" class="font-bold text-[#1D9BF0] hover:underline">V2.0</a> takes the lid off entirely: open market creation, bots, native apps and the points system. See the full <a href="#roadmap" class="font-bold text-[#1D9BF0] hover:underline">roadmap</a>.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-roadmap-v20" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Strategy</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Roadmap V2.0</span>
+            </div>
+
+            <div class="flex items-center gap-3 mb-6 flex-wrap">
+              <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight">V2.0</h1>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-md">Scale</span>
+            </div>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              V1.5 makes the product sticky. V2.0 takes the ceiling off &mdash; anyone can create, from anywhere, on any surface.
+            </p>
+
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-12">
+              The through-line here is distribution. Up to this point CONVICTION is a website that CT visits; after this it is a layer that runs wherever the argument is already happening &mdash; in the group chat, in the Discord, on the phone.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-4xl mb-10">
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="unlock" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">Open market creation</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  The Level 10 gate comes off. Every tweet really is a market, created by anyone, with the resolution bar enforced by the system instead of by a review queue.
+                </p>
+              </div>
+
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="message-circle" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">Telegram &amp; Discord bots</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  Paste a tweet in a group chat and the market spawns in the thread. The argument and the market end up in the same place, which is where they always belonged.
+                </p>
+              </div>
+
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="smartphone" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">iOS &amp; Android apps</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  CT is a phone product. Native apps put BACK and FADE one thumb away from the tweet, and make push notifications something people actually receive.
+                </p>
+              </div>
+
+              <div class="p-6 border border-zinc-200 rounded-2xl bg-white shadow-sm">
+                <span class="w-9 h-9 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-4">
+                  <i data-lucide="coins" class="w-4 h-4"></i>
+                </span>
+                <h3 class="text-[18px] font-bold text-[#18181b] mb-2">Token / Points system</h3>
+                <p class="text-[15px] text-zinc-600 leading-relaxed">
+                  The endgame for the grind. Levels, XP and Conviction Score already track who built the platform &mdash; the points layer is how that record turns into ownership.
+                </p>
+              </div>
+            </div>
+
+            <div class="max-w-4xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="git-branch" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Before this</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  <a href="#roadmap-v15" class="font-bold text-[#1D9BF0] hover:underline">V1.5</a> ships user-generated markets, copy-trading, push and the portfolio dashboard. See the full <a href="#roadmap" class="font-bold text-[#1D9BF0] hover:underline">roadmap</a>.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-gtm-strategy" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Marketing &amp; Community</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">GTM Strategy</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">GTM Strategy</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              We are not launching a new behavior. CT already makes calls, piles on and argues about who was right &mdash; we are launching the scoreboard it never had.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                That is the whole go-to-market advantage and it should shape every decision. There is no market to educate and no habit to build. The pitch is one sentence long, it lands in the same breath as the tweet it is about, and the person hearing it was already having the argument.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                So the job is not awareness. The job is to be present at the exact moment a take gets posted, and to make taking a side cost less effort than replying to it.
+              </p>
+            </div>
+
+            <!-- The wedge -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">The wedge</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              We do not go after &ldquo;crypto traders&rdquo;. That audience is over-served and expensive. We go after the people who are already spending their day being loud about calls, in this order.
+            </p>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-14">
+              <ul class="divide-y divide-zinc-100">
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">01</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">Curators</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">A small group who live on the timeline. They are hired, not converted, and they guarantee the board is never empty.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">02</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">The KOLs being traded</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">They do not need to sign up for us to matter to them. A market on your call is something you react to.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">03</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">The reply guys</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">The people already disagreeing in the replies for free. This is the actual first user, and FADE is built for them.</div>
+                  </div>
+                </li>
+                <li class="flex gap-4 px-5 py-4">
+                  <span class="font-mono text-[13px] font-bold text-zinc-300 w-5 shrink-0 pt-0.5">04</span>
+                  <div>
+                    <div class="text-[14px] font-medium text-black mb-0.5">The audience</div>
+                    <div class="text-[13px] text-zinc-500 leading-snug">Everyone who lurks the argument. They arrive last, through receipts, and they arrive with context already attached.</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Phases -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Three phases</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Supply before demand, always. An empty board kills a prediction market faster than no marketing does.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mb-10">
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm flex flex-col">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-3">Phase 0</span>
+                <h3 class="text-[16px] font-bold text-[#18181b] mb-2">Seed the board</h3>
+                <p class="text-[13px] text-zinc-500 leading-relaxed mb-4">Curated markets only. Enough live markets across all five categories that nobody ever lands on an empty feed.</p>
+                <span class="mt-auto text-[11px] font-mono text-zinc-400">Success: the feed looks busy</span>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm flex flex-col">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 mb-3">Phase 1</span>
+                <h3 class="text-[16px] font-bold text-[#18181b] mb-2">Buy the first trade</h3>
+                <p class="text-[13px] text-zinc-500 leading-relaxed mb-4">The incentive stack goes live. Every barrier to trade number one is paid off, and every settled trade produces a receipt.</p>
+                <span class="mt-auto text-[11px] font-mono text-zinc-400">Success: receipts in the wild</span>
+              </div>
+              <div class="p-5 rounded-2xl bg-[#18181b] text-white shadow-md flex flex-col">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 mb-3">Phase 2</span>
+                <h3 class="text-[16px] font-bold mb-2">Hand over supply</h3>
+                <p class="text-[13px] text-zinc-400 leading-relaxed mb-4">PROVE IT. opens at Level 10. Market creation stops being a headcount problem and becomes a community one.</p>
+                <span class="mt-auto text-[11px] font-mono text-zinc-500">Success: we stop being the source</span>
+              </div>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="lock" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Why it holds</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  Balances are portable, reputation is not. A user with a Conviction Score of 85 and a Legend badge cannot take either of them anywhere else. The longer someone plays, the more expensive leaving becomes &mdash; conviction is the new currency.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-twitter-strategy" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Marketing &amp; Community</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Twitter Strategy</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Twitter Strategy</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              The account is not a brand account. It is a participant in the argument that happens to run the book.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Brand accounts post announcements and get ignored. We post <strong class="text-black font-medium">markets</strong>: a call, a price, and two sides you can take right now. Every post is a thing to do, not a thing to read.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                The tone follows from that. We are never the neutral exchange explaining its product &mdash; we are the one keeping score, and we are slightly enjoying it. Confident, short, funny when the timeline is being ridiculous, and never preachy about risk.
+              </p>
+            </div>
+
+            <!-- Anatomy of a post -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Anatomy of a post</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Quote the call. State the odds. Give the action. Nothing else earns its place in the tweet.
+            </p>
+
+            <div class="max-w-lg rounded-2xl border border-zinc-200 bg-white shadow-sm p-5 mb-14">
+              <div class="flex items-center gap-2.5 mb-3">
+                <div class="w-9 h-9 rounded-full bg-[#18181b] flex items-center justify-center text-white text-[13px] font-extrabold shrink-0">C</div>
+                <div class="leading-tight">
+                  <div class="text-[14px] font-bold text-[#18181b]">CONVICTION</div>
+                  <div class="text-[12px] text-zinc-400">@conviction</div>
+                </div>
+              </div>
+              <p class="text-[14px] text-[#18181b] leading-snug mb-3">
+                Ansem says ETH clears $8K before 2027.<br/>
+                The timeline says 70% he is right.<br/>
+                <span class="text-zinc-500">Back it or fade it. &darr;</span>
+              </p>
+              <div class="rounded-xl border border-zinc-200 bg-[#FAFAFA] p-3">
+                <div class="flex justify-between text-[11px] font-bold mb-1.5">
+                  <span class="text-[#22C55E]">BACK 70&cent;</span>
+                  <span class="text-[#EF4444]">FADE 30&cent;</span>
+                </div>
+                <div class="w-full h-1.5 bg-zinc-200 rounded-full overflow-hidden flex">
+                  <div class="h-full bg-[#22C55E]" style="width: 70%"></div>
+                  <div class="h-full bg-[#EF4444]" style="width: 30%"></div>
+                </div>
+              </div>
+              <p class="text-[11px] font-mono text-zinc-400 mt-3">Quote &middot; price &middot; action. Always a live link.</p>
+            </div>
+
+            <!-- Pillars -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Content pillars</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Five recurring formats. Anything that does not fit one of them is probably an announcement, and announcements go in the replies.
+            </p>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-14">
+              <table class="w-full text-left text-[14px]">
+                <thead class="text-[12px] text-zinc-500 uppercase tracking-wider bg-zinc-50 border-b border-zinc-200">
+                  <tr>
+                    <th class="px-5 py-3 font-bold">Format</th>
+                    <th class="px-5 py-3 font-bold">What it does</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 bg-white">
+                  <tr>
+                    <td class="px-5 py-3.5 font-medium text-black whitespace-nowrap">Market of the day</td>
+                    <td class="px-5 py-3.5 text-zinc-600">The loudest call on the timeline, priced. The default post.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-3.5 font-medium text-black whitespace-nowrap">Receipts</td>
+                    <td class="px-5 py-3.5 text-zinc-600">HE CALLED IT and BAD CALL, quoted back at the original tweet when it settles.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-3.5 font-medium text-black whitespace-nowrap">KOL battles</td>
+                    <td class="px-5 py-3.5 text-zinc-600">Two names, opposing calls, one market. Pulls two audiences into the same thread.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-3.5 font-medium text-black whitespace-nowrap">Leaderboard</td>
+                    <td class="px-5 py-3.5 text-zinc-600">Who is actually right this week. Turns the Conviction Score into public status.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-3.5 font-medium text-black whitespace-nowrap">Odds moves</td>
+                    <td class="px-5 py-3.5 text-zinc-600">A market swinging hard is news by itself. Free content the users generate.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Rules -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">House rules</h2>
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <ul class="divide-y divide-zinc-100 text-[14px]">
+                <li class="flex gap-4 px-5 py-4"><i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i><span class="text-zinc-600">Be in the replies of the tweet that became the market. That is where the audience already is.</span></li>
+                <li class="flex gap-4 px-5 py-4"><i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i><span class="text-zinc-600">Quote the KOL, never mock them. We price the call, we do not pick a side.</span></li>
+                <li class="flex gap-4 px-5 py-4"><i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i><span class="text-zinc-600">Post the loss as loudly as the win. A platform that only shows winners is not a scoreboard, it is an ad.</span></li>
+                <li class="flex gap-4 px-5 py-4"><i data-lucide="check" class="w-4 h-4 text-[#166534] shrink-0 mt-0.5"></i><span class="text-zinc-600">Every post ends in an action. If there is nothing to BACK or FADE, it is not a post.</span></li>
+              </ul>
+            </div>
+          </article>
+
+          <article id="page-kol-onboarding" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Marketing &amp; Community</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">KOL &amp; Curator Onboarding</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">KOL &amp; Curator Onboarding</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Two roles, two completely different asks. Curators supply the markets. KOLs are the markets.
+            </p>
+
+            <!-- Comparison -->
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white overflow-hidden shadow-sm mb-14">
+              <div class="grid grid-cols-2 bg-zinc-50 border-b border-zinc-200 text-[11px] font-bold uppercase tracking-wider">
+                <div class="px-4 sm:px-5 py-2.5 text-zinc-500">Curator</div>
+                <div class="px-4 sm:px-5 py-2.5 border-l border-zinc-200 text-[#18181b]">KOL</div>
+              </div>
+              <div class="divide-y divide-zinc-100">
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Works for the platform</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Owes the platform nothing</div>
+                </div>
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Finds the tweets worth trading</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Writes the tweets worth trading</div>
+                </div>
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Recruited and briefed</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Discovered by being traded</div>
+                </div>
+                <div class="grid grid-cols-2">
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] text-zinc-500">Success: the board is never empty</div>
+                  <div class="px-4 sm:px-5 py-3.5 text-[14px] font-medium text-black border-l border-zinc-200">Success: they quote the market</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- KOL pitch -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">The KOL pitch</h2>
+            <div class="space-y-4 max-w-3xl mb-8">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                We are not asking them to shill anything, and the pitch should never sound like we are. A market on their call already exists &mdash; the conversation is about what that gets them.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                The offer is a permanent, public, verifiable track record. Every KOL claims they called it. Only the ones on CONVICTION can point at the receipt.
+              </p>
+            </div>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-14">
+              <div class="px-5 py-3 border-b border-zinc-200 bg-zinc-50">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500">Objections and answers</span>
+              </div>
+              <ul class="divide-y divide-zinc-100">
+                <li class="px-5 py-4">
+                  <div class="text-[14px] font-medium text-black mb-1">&ldquo;So you are betting against me.&rdquo;</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">The market prices the call, it does not take a side. And a market at 70% BACK is the timeline publicly agreeing with you.</div>
+                </li>
+                <li class="px-5 py-4">
+                  <div class="text-[14px] font-medium text-black mb-1">&ldquo;What if I am wrong in public?&rdquo;</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">You already are &mdash; screenshots exist. The difference is that here the wins are recorded with the same permanence as the misses.</div>
+                </li>
+                <li class="px-5 py-4">
+                  <div class="text-[14px] font-medium text-black mb-1">&ldquo;What is in it for me?&rdquo;</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">Being tradeable is status. A market with your name on it is distribution you did not have to post for, and copy-trading turns a high score into followers who act.</div>
+                </li>
+                <li class="px-5 py-4">
+                  <div class="text-[14px] font-medium text-black mb-1">&ldquo;Take my tweet down.&rdquo;</div>
+                  <div class="text-[13px] text-zinc-500 leading-snug">Handled human to human, not by policy. But the wording is captured at creation and the market settles either way &mdash; that is what makes the record worth anything.</div>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Curator -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Recruiting curators</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              The job is taste, not effort. A curator has to spot the difference between a spicy take and a <em>tradeable</em> one &mdash; the second has a number and a date in it.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mb-10">
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <span class="w-8 h-8 rounded-lg bg-[#DCFCE7] text-[#166534] flex items-center justify-center mb-3">
+                  <i data-lucide="check" class="w-4 h-4"></i>
+                </span>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-2">What we look for</h4>
+                <ul class="text-[13px] text-zinc-500 leading-relaxed space-y-1.5">
+                  <li>Lives on CT and reads it before breakfast</li>
+                  <li>Instinct for which take will still be argued about tomorrow</li>
+                  <li>Writes resolution criteria that nobody can wriggle out of</li>
+                  <li>Knows the second tier of KOLs, not just the top ten</li>
+                </ul>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <span class="w-8 h-8 rounded-lg bg-zinc-100 text-[#18181b] flex items-center justify-center mb-3">
+                  <i data-lucide="list-checks" class="w-4 h-4"></i>
+                </span>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-2">The onboarding</h4>
+                <ul class="text-[13px] text-zinc-500 leading-relaxed space-y-1.5">
+                  <li>Brief on the five categories and the resolution bar</li>
+                  <li>Shadow week: submissions reviewed before going live</li>
+                  <li>Own the daily market of the day for one category</li>
+                  <li>Level 45 grants Curator status inside the product itself</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-viral-loops" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Marketing &amp; Community</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Viral Loops</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Viral Loops</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              Growth here is not a campaign, it is a by-product. The product manufactures shareable artifacts as a side effect of people using it.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Most consumer apps have to invent a reason to be posted about. We do not: a settled market produces a receipt whether anyone asks for it or not, and a receipt is content with proof, context and a scoreboard baked in.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Four loops run in parallel. The first one is the engine; the other three feed it.
+              </p>
+            </div>
+
+            <!-- GRAPHIC: the receipt loop -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Loop 1 &middot; The receipt loop</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              The main engine. Nothing in it depends on a marketing decision &mdash; it turns once for every trade that settles.
+            </p>
+
+            <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8 sm:p-10 shadow-inner max-w-3xl mb-14">
+              <div class="w-full max-w-sm mx-auto">
+
+                <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-3.5 shadow-sm flex items-center gap-3">
+                  <span class="font-mono text-[11px] font-bold text-zinc-300 shrink-0">01</span>
+                  <span class="text-[14px] font-medium text-[#18181b]">Someone takes a side</span>
+                </div>
+                <div class="h-5 w-px bg-zinc-300 mx-auto" aria-hidden="true"></div>
+
+                <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-3.5 shadow-sm flex items-center gap-3">
+                  <span class="font-mono text-[11px] font-bold text-zinc-300 shrink-0">02</span>
+                  <span class="text-[14px] font-medium text-[#18181b]">The market settles</span>
+                </div>
+                <div class="h-5 w-px bg-zinc-300 mx-auto" aria-hidden="true"></div>
+
+                <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-3.5 shadow-sm flex items-center gap-3">
+                  <span class="font-mono text-[11px] font-bold text-zinc-300 shrink-0">03</span>
+                  <span class="text-[14px] font-medium text-[#18181b]">A receipt is minted</span>
+                </div>
+                <div class="h-5 w-px bg-zinc-300 mx-auto" aria-hidden="true"></div>
+
+                <div class="bg-[#18181b] rounded-2xl px-5 py-3.5 shadow-md flex items-center gap-3 text-white">
+                  <span class="font-mono text-[11px] font-bold text-zinc-500 shrink-0">04</span>
+                  <span class="text-[14px] font-bold">It gets posted to X</span>
+                </div>
+                <div class="h-5 w-px bg-zinc-300 mx-auto" aria-hidden="true"></div>
+
+                <div class="bg-white border border-zinc-200 rounded-2xl px-5 py-3.5 shadow-sm flex items-center gap-3">
+                  <span class="font-mono text-[11px] font-bold text-zinc-300 shrink-0">05</span>
+                  <span class="text-[14px] font-medium text-[#18181b]">Their timeline sees the market</span>
+                </div>
+
+                <!-- loop back -->
+                <div class="relative h-12 mt-0" aria-hidden="true">
+                  <div class="absolute left-1/2 top-0 h-6 w-px bg-zinc-300"></div>
+                  <div class="absolute left-4 right-1/2 top-6 h-px bg-zinc-300"></div>
+                  <div class="absolute left-4 top-6 bottom-0 w-px bg-zinc-300"></div>
+                </div>
+                <div class="flex items-center gap-2 -mt-1">
+                  <i data-lucide="corner-left-up" class="w-4 h-4 text-zinc-400 shrink-0"></i>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400">Back to 01, with a new trader</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- The other loops -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">The other three</h2>
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <table class="w-full text-left text-[14px]">
+                <thead class="text-[12px] text-zinc-500 uppercase tracking-wider bg-zinc-50 border-b border-zinc-200">
+                  <tr>
+                    <th class="px-5 py-3 font-bold">Loop</th>
+                    <th class="px-5 py-3 font-bold">Trigger</th>
+                    <th class="px-5 py-3 font-bold">Why it spreads</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 bg-white">
+                  <tr>
+                    <td class="px-5 py-4 font-medium text-black whitespace-nowrap">Referral</td>
+                    <td class="px-5 py-4 text-zinc-600">A friend deposits and trades</td>
+                    <td class="px-5 py-4 text-zinc-600">$25 each. Pays for the invite that was going to be sent anyway.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-4 font-medium text-black whitespace-nowrap">PROVE IT.</td>
+                    <td class="px-5 py-4 text-zinc-600">A user lists someone&rsquo;s take</td>
+                    <td class="px-5 py-4 text-zinc-600">The KOL finds out they are being priced, and reacting brings their whole audience.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-4 font-medium text-black whitespace-nowrap">KOL battle</td>
+                    <td class="px-5 py-4 text-zinc-600">Two names on opposite sides</td>
+                    <td class="px-5 py-4 text-zinc-600">Two audiences arrive to defend their guy. Rivalry is free distribution.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="alert-triangle" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">What breaks the loops</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  A receipt that takes more than one tap to post. A market nobody can verify, because a disputed settlement poisons the artifact. And an empty board &mdash; a shared receipt that lands on a dead feed converts nobody.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-marketing-referral" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Marketing &amp; Community</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Referral Program</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Referral Program</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              The mechanic is simple and already decided: <a href="#refer-a-degen" class="font-bold text-[#1D9BF0] hover:underline">$25 each</a>. This page is about the part that actually determines whether it works &mdash; when we ask.
+            </p>
+
+            <div class="space-y-4 max-w-3xl mb-12">
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                Referral programs fail on timing, not on reward size. Asking at signup is asking someone to vouch for a product they have not used. Asking in a banner is asking nobody in particular.
+              </p>
+              <p class="text-[16px] text-zinc-600 leading-relaxed">
+                There is exactly one moment when a user wants to bring someone in, and it is the same moment they want to post: right after they were right in public.
+              </p>
+            </div>
+
+            <!-- Placement -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Where the ask lives</h2>
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-14">
+              <table class="w-full text-left text-[14px]">
+                <thead class="text-[12px] text-zinc-500 uppercase tracking-wider bg-zinc-50 border-b border-zinc-200">
+                  <tr>
+                    <th class="px-5 py-3 font-bold">Moment</th>
+                    <th class="px-5 py-3 font-bold">Why here</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-200 bg-white">
+                  <tr class="bg-zinc-50">
+                    <td class="px-5 py-4 font-semibold text-black whitespace-nowrap">After a winning receipt</td>
+                    <td class="px-5 py-4 text-zinc-600">Peak pride, and they are already in the share flow. This is the primary placement &mdash; everything else is secondary.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-4 font-medium text-black whitespace-nowrap">On a level-up</td>
+                    <td class="px-5 py-4 text-zinc-600">A perk just unlocked. Good moment to point out the fastest 50 XP available is bringing someone in.</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-4 font-medium text-black whitespace-nowrap">On a KOL battle market</td>
+                    <td class="px-5 py-4 text-zinc-600">These are the markets people want an audience for. &ldquo;Bring someone who disagrees.&rdquo;</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-4 font-medium text-black whitespace-nowrap">Empty portfolio state</td>
+                    <td class="px-5 py-4 text-zinc-600">Nothing to show yet, so give them something to do that still earns.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Creative -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">The creative</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              The invite is a dare, not a discount code. It should read like something one degen sends another, because that is exactly what it is.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mb-10">
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#166534] mb-3 block">Sounds like us</span>
+                <ul class="text-[14px] text-zinc-600 leading-relaxed space-y-2">
+                  <li>&ldquo;I just took $30 off this take. Your turn.&rdquo;</li>
+                  <li>&ldquo;You have been wrong about this for a month. Prove it.&rdquo;</li>
+                  <li>&ldquo;$25 each. Come fade me.&rdquo;</li>
+                </ul>
+              </div>
+              <div class="p-5 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#991B1B] mb-3 block">Does not</span>
+                <ul class="text-[14px] text-zinc-500 leading-relaxed space-y-2">
+                  <li>&ldquo;Join me on CONVICTION and we both earn rewards!&rdquo;</li>
+                  <li>&ldquo;Sign up with my referral link&rdquo;</li>
+                  <li>Anything with the word &ldquo;platform&rdquo; in it</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="shield" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">Keep it honest</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  The reward only fires on a real deposit and a real trade, which is what keeps the program from turning into farmed signups. Watch the ratio of referrals to second trades &mdash; if invited users never come back, the program is buying noise, not users.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <article id="page-launch-campaign" class="doc-page hidden">
+            <div class="flex items-center gap-2 text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">
+              <span>Marketing &amp; Community</span>
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <span class="text-[#18181b]">Launch Campaign</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tighter text-[#18181b] leading-tight mb-6">Launch Campaign</h1>
+
+            <p class="text-[20px] text-zinc-600 leading-relaxed mb-10 max-w-3xl">
+              One idea, carried the whole way through: <strong class="text-black font-medium">every tweet is a market.</strong> We do not announce that. We demonstrate it on the loudest calls in the timeline until people work it out.
+            </p>
+
+            <!-- Beats -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">The beats</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              Four movements. Each one has a single job, and none of them is &ldquo;explain the product&rdquo;.
+            </p>
+
+            <div class="max-w-3xl space-y-4 mb-14">
+              <div class="border border-zinc-200 rounded-2xl bg-white shadow-sm p-5 sm:p-6">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest">Beat 1</span>
+                  <h3 class="text-[17px] font-extrabold text-[#18181b] tracking-tight">Prices, no product</h3>
+                </div>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  The account posts odds on real calls before anyone can trade them. No link, no explanation, just a number under someone&rsquo;s take. The only acceptable reaction is &ldquo;wait, where do I do this&rdquo;.
+                </p>
+              </div>
+
+              <div class="border border-zinc-200 rounded-2xl bg-white shadow-sm p-5 sm:p-6">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest">Beat 2</span>
+                  <h3 class="text-[17px] font-extrabold text-[#18181b] tracking-tight">The board opens</h3>
+                </div>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  Trading goes live with the full incentive stack behind it: doubled deposit, first loss covered, zero fees. The message is not &ldquo;we launched&rdquo;, it is &ldquo;the first one is free, pick a side&rdquo;.
+                </p>
+              </div>
+
+              <div class="border-2 border-[#18181b] rounded-2xl bg-white shadow-md p-5 sm:p-6 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-[#18181b]"></div>
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-[11px] font-mono font-bold text-white bg-[#18181b] px-2 py-1 rounded-md uppercase tracking-widest">Beat 3</span>
+                  <h3 class="text-[17px] font-extrabold text-[#18181b] tracking-tight">The first receipts land</h3>
+                </div>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  The moment the campaign stops being ours. Early markets settle, HE CALLED IT and BAD CALL start appearing on other people&rsquo;s timelines, and the loop takes over from the media plan. Everything before this beat exists to reach it.
+                </p>
+              </div>
+
+              <div class="border border-zinc-200 rounded-2xl bg-white shadow-sm p-5 sm:p-6">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-[11px] font-mono font-bold text-zinc-500 bg-zinc-100 px-2 py-1 rounded-md uppercase tracking-widest">Beat 4</span>
+                  <h3 class="text-[17px] font-extrabold text-[#18181b] tracking-tight">Keep score in public</h3>
+                </div>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  Weekly leaderboard, biggest fade of the week, the KOL with the best record and the one with the worst. The campaign becomes a recurring format instead of an event with an end date.
+                </p>
+              </div>
+            </div>
+
+            <!-- Copy bank -->
+            <h2 class="text-[24px] font-bold text-[#18181b] mb-4">Copy bank</h2>
+            <p class="text-[16px] text-zinc-600 leading-relaxed max-w-3xl mb-8">
+              The hero lines. They are short enough to work as a bio, a banner, a sticker or the last line of a tweet &mdash; use them in that order of preference.
+            </p>
+
+            <div class="max-w-3xl border border-zinc-200 rounded-2xl bg-white shadow-sm overflow-hidden mb-10">
+              <ul class="divide-y divide-zinc-100">
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">Every tweet is a market.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Hero</span>
+                </li>
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">Put money behind what you say.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Tagline</span>
+                </li>
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">Back it. Fade it. Prove it.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Action</span>
+                </li>
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">The internet talks. We keep the receipts.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Receipts</span>
+                </li>
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">Your reputation is your portfolio.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Score</span>
+                </li>
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">Conviction is the new currency.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Brand</span>
+                </li>
+                <li class="px-5 py-4 flex items-center justify-between gap-4">
+                  <span class="text-[16px] font-bold text-[#18181b]">Markets reward clarity, not noise.</span>
+                  <span class="text-[11px] font-mono uppercase tracking-wider text-zinc-400 whitespace-nowrap">Positioning</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="max-w-3xl p-5 bg-zinc-50 border border-zinc-200 rounded-2xl flex items-start gap-4 mb-10">
+              <i data-lucide="target" class="w-5 h-5 text-[#18181b] shrink-0 mt-0.5"></i>
+              <div>
+                <h4 class="text-[15px] font-bold text-[#18181b] mb-1">The one number that matters</h4>
+                <p class="text-[14px] text-zinc-600 leading-relaxed">
+                  Not signups and not impressions. <strong class="text-black font-medium">Receipts posted to X per day.</strong> It is the only metric that is simultaneously an engagement measure, a retention measure and the acquisition channel.
+                </p>
+              </div>
+            </div>
+          </article>
           <div id="coming-soon" class="doc-page hidden py-24">
             <div class="flex flex-col items-center justify-center text-center">
               <i data-lucide="book-open" class="w-14 h-14 text-zinc-300 mb-6"></i>
@@ -1743,46 +3480,33 @@
       { title: 'Tech & Architecture', description: 'Dive into our tech stack, wallet integrations, and API architecture.', icon: 'code', href: '#tech-stack' }
     ];
 
-    // IDs of pages that actually have content
+    // IDs of pages that actually have content.
+    // Anything not listed here falls back to the "coming soon" placeholder,
+    // so add an ID only once its <article> exists.
     const WRITTEN_PAGES = [
-      'what-is-conviction', 
-      'how-it-works', 
-      'core-mechanics', 
-      'markets', 
+      'what-is-conviction',
+      'how-it-works',
+      'core-mechanics',
+      'markets',
       'reputation',
       'level-system',
       'user-generated-markets',
-      'user-incentives', 
+      'user-incentives',
       'first-loss-protected',
       'refer-a-degen',
       'zero-fees',
       'points-xp',
       'milestone-rewards',
+      'roadmap',
+      'roadmap-v15',
+      'roadmap-v20',
+      'hiring-needs',
       'gtm-strategy',
       'twitter-strategy',
       'kol-onboarding',
       'marketing-referral',
       'viral-loops',
-      'launch-campaign',
-      'revenue-streams',
-      'points-program',
-      'token-utility',
-      'unit-economics',
-      'brand-guidelines',
-      'ui-ux',
-      'screens-components',
-      'user-flows',
-      'tech-stack',
-      'architecture',
-      'api-integrations',
-      'team-structure',
-      'hiring-needs',
-      'legal',
-      'risk-management',
-      'roadmap', 
-      'roadmap-v15',
-      'roadmap-v20',
-      'fundraising'
+      'launch-campaign'
     ];
 
     const sidebar = document.getElementById('sidebar');
@@ -1958,6 +3682,52 @@
       activeBadge.classList.remove('bg-zinc-200/50', 'text-black', 'border-zinc-200');
       activeBadge.classList.add('bg-black', 'text-white', 'border-transparent');
     }, 2000);
+
+    // Auto-Highlight Cycles (Core Mechanics)
+    function createHighlightCycle(containerId, itemSelector) {
+      const container = document.getElementById(containerId);
+      if (!container) return null;
+
+      const items = Array.from(container.querySelectorAll(itemSelector));
+      if (!items.length) return null;
+
+      let index = 0;
+      let paused = false;
+
+      const paint = () => {
+        items.forEach((item, i) => item.classList.toggle('is-active', i === index));
+      };
+
+      // El hover manda: al pasar el ratón se pausa el ciclo
+      container.addEventListener('mouseenter', () => {
+        paused = true;
+        items.forEach((item) => item.classList.remove('is-active'));
+      });
+      container.addEventListener('mouseleave', () => {
+        paused = false;
+        paint();
+      });
+
+      paint();
+
+      return () => {
+        // No avanzar si el usuario está encima o la página no está visible
+        if (paused || !container.offsetParent) return;
+        index = (index + 1) % items.length;
+        paint();
+      };
+    }
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const highlightCycles = [
+        createHighlightCycle('market-lifecycle', '.ph-stage'),
+        createHighlightCycle('lifecycle-cards', '.lc-card')
+      ].filter(Boolean);
+
+      if (highlightCycles.length) {
+        setInterval(() => highlightCycles.forEach((tick) => tick()), 3000);
+      }
+    }
   </script>
 </body>
 </html>
