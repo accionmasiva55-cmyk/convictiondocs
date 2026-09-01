@@ -209,6 +209,28 @@
        against a dark header. Flip it to white. */
     html.dark .site-logo { filter: invert(1); }
 
+    /* Brief highlight on the heading a search result landed on */
+    @keyframes search-flash-in {
+      0%   { background-color: rgba(234,179,8,0.28); }
+      100% { background-color: transparent; }
+    }
+    .search-flash {
+      animation: search-flash-in 1.8s ease-out;
+      border-radius: 6px;
+      box-decoration-break: clone;
+    }
+    html.dark .search-flash { animation-name: search-flash-in-dark; }
+    @keyframes search-flash-in-dark {
+      0%   { background-color: rgba(234,179,8,0.22); }
+      100% { background-color: transparent; }
+    }
+
+    /* Search results panel in dark mode */
+    html.dark #search-results,
+    html.dark #mobile-search-results { background-color: var(--c-surface); border-color: var(--c-border); }
+    html.dark #search-results mark,
+    html.dark #mobile-search-results mark { color: var(--c-fg); }
+
     /* ------------------------------------------------------------------
        Responsive safety nets
        ------------------------------------------------------------------ */
@@ -256,6 +278,7 @@
           <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <span class="text-[10px] font-medium text-zinc-400 border border-zinc-200 rounded px-1.5 py-0.5 bg-white">Ctrl K</span>
           </div>
+          <div id="search-results" class="hidden absolute left-0 right-0 top-full mt-2 z-50 max-h-[70vh] overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-xl"></div>
         </div>
       </div>
 
@@ -271,12 +294,15 @@
     </div>
     
     <div id="mobile-search" class="hidden md:hidden px-4 pb-3">
-      <input
-        id="mobile-search-input"
-        type="text"
-        class="block w-full py-2 px-4 text-sm text-black bg-white border border-zinc-200 rounded-full focus:ring-1 focus:ring-black focus:border-black placeholder:text-zinc-400 shadow-sm outline-none"
-        placeholder="Search documentation..."
-      />
+      <div class="relative">
+        <input
+          id="mobile-search-input"
+          type="text"
+          class="block w-full py-2 px-4 text-sm text-black bg-white border border-zinc-200 rounded-full focus:ring-1 focus:ring-black focus:border-black placeholder:text-zinc-400 shadow-sm outline-none"
+          placeholder="Search documentation..."
+        />
+        <div id="mobile-search-results" class="hidden absolute left-0 right-0 top-full mt-2 z-50 max-h-[65vh] overflow-y-auto rounded-2xl border border-zinc-200 bg-white shadow-xl"></div>
+      </div>
     </div>
   </header>
 
@@ -5640,6 +5666,20 @@
       renderSidebar(path, document.getElementById('search-input').value || document.getElementById('mobile-search-input').value);
       refreshIcons();
       window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // A search result asked for a specific section on this page.
+      if (pendingAnchor) {
+        const target = document.getElementById(pendingAnchor);
+        pendingAnchor = null;
+        if (target) {
+          requestAnimationFrame(() => {
+            const top = target.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+            target.classList.add('search-flash');
+            setTimeout(() => target.classList.remove('search-flash'), 1800);
+          });
+        }
+      }
     }
 
     function goHome(e) {
@@ -5667,13 +5707,223 @@
       document.getElementById('mobile-search-input').focus();
     });
 
-    function bindSearch(input) {
-      input.addEventListener('input', () => {
-        renderSidebar(currentHash(), input.value);
+    // ------------------------------------------------------------------
+    // Full-text search over every article. Headings are indexed individually
+    // so a result can jump to the exact section, not just the page.
+    // ------------------------------------------------------------------
+    const SEARCH_INDEX = [];
+    let searchIndexBuilt = false;
+
+    function slugify(text) {
+      return text.toLowerCase().trim()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 60);
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    }
+
+    function buildSearchIndex() {
+      if (searchIndexBuilt) return;
+
+      const titleByPath = {};
+      FLAT_PAGES.forEach((item) => { titleByPath[item.href.replace('#', '')] = item.title; });
+
+      document.querySelectorAll('article.doc-page').forEach((article) => {
+        const path = article.id.replace(/^page-/, '');
+        const pageTitle = titleByPath[path] || path.replace(/-/g, ' ');
+        const used = {};
+
+        article.querySelectorAll('h1, h2, h3, h4').forEach((heading) => {
+          const text = heading.textContent.replace(/\s+/g, ' ').trim();
+          if (!text) return;
+          if (!heading.id) {
+            const base = path + '--' + slugify(text);
+            let id = base;
+            let n = 2;
+            while (used[id] || document.getElementById(id)) { id = base + '-' + n++; }
+            used[id] = true;
+            heading.id = id;
+          }
+          SEARCH_INDEX.push({ path, pageTitle, anchor: heading.id, heading: text, body: '' });
+        });
+
+        // Whole-page entry, used only when nothing in this page's headings matched.
+        SEARCH_INDEX.push({
+          path, pageTitle, anchor: '', heading: '',
+          body: article.textContent.replace(/\s+/g, ' ').trim()
+        });
+      });
+
+      searchIndexBuilt = true;
+    }
+
+    function searchDocs(query) {
+      const q = query.replace(/\s+/g, ' ').trim().toLowerCase();
+      if (q.length < 2) return [];
+      buildSearchIndex();
+
+      const results = [];
+      const pageHasHit = {};
+
+      SEARCH_INDEX.forEach((entry) => {
+        if (!entry.heading) return;
+        const heading = entry.heading.toLowerCase();
+        const title = entry.pageTitle.toLowerCase();
+        let score = 0;
+
+        if (title === q || heading === q) score = 100;
+        else if (title.startsWith(q)) score = 85;
+        else if (heading.startsWith(q)) score = 75;
+        else if (heading.includes(q)) score = 60;
+        else if (title.includes(q)) score = 50;
+
+        if (score) {
+          results.push(Object.assign({ score, snippet: '' }, entry));
+          pageHasHit[entry.path] = true;
+        }
+      });
+
+      SEARCH_INDEX.forEach((entry) => {
+        if (entry.heading || pageHasHit[entry.path]) return;
+        const idx = entry.body.toLowerCase().indexOf(q);
+        if (idx === -1) return;
+        const start = Math.max(0, idx - 40);
+        const snippet = (start > 0 ? '…' : '') +
+          entry.body.slice(start, idx + q.length + 80).trim() + '…';
+        results.push(Object.assign({ score: 20, snippet }, entry));
+      });
+
+      return results.sort((a, b) => b.score - a.score).slice(0, 8);
+    }
+
+    function highlight(text, query) {
+      const safe = escapeHtml(text);
+      const idx = text.toLowerCase().indexOf(query.toLowerCase());
+      if (idx === -1) return safe;
+      const before = escapeHtml(text.slice(0, idx));
+      const match = escapeHtml(text.slice(idx, idx + query.length));
+      const after = escapeHtml(text.slice(idx + query.length));
+      return before + '<mark class="bg-transparent text-[#18181b] font-bold">' + match + '</mark>' + after;
+    }
+
+    // Scroll target consumed by showView once the page is on screen.
+    let pendingAnchor = null;
+    let activeResults = [];
+    let activeIndex = -1;
+
+    function goToResult(path, anchor) {
+      pendingAnchor = anchor || null;
+      closeSearch();
+      if (currentHash() === path) {
+        showView(path);
+      } else {
+        window.location.hash = path;
+      }
+    }
+
+    function closeSearch() {
+      ['search-results', 'mobile-search-results'].forEach((id) => {
+        const panel = document.getElementById(id);
+        panel.classList.add('hidden');
+        panel.innerHTML = '';
+      });
+      activeResults = [];
+      activeIndex = -1;
+    }
+
+    function renderResults(panel, query) {
+      const results = searchDocs(query);
+      activeResults = results;
+      activeIndex = results.length ? 0 : -1;
+
+      if (!query.trim()) {
+        panel.classList.add('hidden');
+        panel.innerHTML = '';
+        return;
+      }
+
+      if (!results.length) {
+        panel.innerHTML = `
+          <div class="px-4 py-6 text-center">
+            <p class="text-[14px] text-zinc-500">No results for “<span class="font-medium text-[#18181b]">${escapeHtml(query)}</span>”</p>
+          </div>`;
+        panel.classList.remove('hidden');
+        return;
+      }
+
+      panel.innerHTML = '<ul class="divide-y divide-zinc-100">' + results.map((r, i) => `
+        <li>
+          <button type="button" data-result="${i}" class="w-full text-left px-4 py-3 transition-colors ${i === activeIndex ? 'bg-zinc-50' : 'hover:bg-zinc-50'}">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400">${escapeHtml(r.pageTitle)}</span>
+            </div>
+            <div class="text-[14px] font-medium text-zinc-600 leading-snug">
+              ${r.heading ? highlight(r.heading, query) : highlight(r.snippet, query)}
+            </div>
+          </button>
+        </li>
+      `).join('') + '</ul>';
+
+      panel.classList.remove('hidden');
+
+      panel.querySelectorAll('[data-result]').forEach((button) => {
+        button.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          const r = results[Number(button.dataset.result)];
+          goToResult(r.path, r.anchor);
+        });
       });
     }
-    bindSearch(document.getElementById('search-input'));
-    bindSearch(document.getElementById('mobile-search-input'));
+
+    function bindSearch(input, panelId) {
+      const panel = document.getElementById(panelId);
+
+      input.addEventListener('input', () => {
+        renderSidebar(currentHash(), input.value);
+        renderResults(panel, input.value);
+      });
+
+      input.addEventListener('focus', () => {
+        if (input.value.trim()) renderResults(panel, input.value);
+      });
+
+      input.addEventListener('blur', () => {
+        setTimeout(closeSearch, 120);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          input.blur();
+          closeSearch();
+          return;
+        }
+        if (!activeResults.length) return;
+
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeIndex = e.key === 'ArrowDown'
+            ? (activeIndex + 1) % activeResults.length
+            : (activeIndex - 1 + activeResults.length) % activeResults.length;
+          panel.querySelectorAll('[data-result]').forEach((button, i) => {
+            button.classList.toggle('bg-zinc-50', i === activeIndex);
+          });
+          const active = panel.querySelector(`[data-result="${activeIndex}"]`);
+          if (active) active.scrollIntoView({ block: 'nearest' });
+        }
+
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const r = activeResults[activeIndex] || activeResults[0];
+          if (r) goToResult(r.path, r.anchor);
+        }
+      });
+    }
+
+    bindSearch(document.getElementById('search-input'), 'search-results');
+    bindSearch(document.getElementById('mobile-search-input'), 'mobile-search-results');
 
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
